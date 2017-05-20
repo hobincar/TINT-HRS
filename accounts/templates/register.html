@@ -1,12 +1,65 @@
 {% extends "base.html" %}
 
+{% block css %}
+    <link rel="stylesheet" href="/static/css/register.css">
+{% endblock %}
+
 {% block content %}
-  <form role="form" method="post" action="{% url 'register' %}">
-    <legend>Create a new account</legend>
-    {% csrf_token %}
-    {{ form }}
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Create account</button>
+<div class="ui middle aligned center aligned grid row">
+    <div class="three wide column"></div>
+    <div class="ten wide column">
+        <h2 class="ui teal image header">
+            <div class="content">
+                Sign-up your account
+            </div>
+        </h2>
+        <form role="form" class="ui register large form" method="POST" action="{% url 'register' %}">{% csrf_token %}
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="mail icon"></i>
+                        <input id="email" class="ui" type="text" name="email" placeholder="E-mail address"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="password1" type="password" name="password1" placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="password2" type="password" name="password2" placeholder="Password confirmation"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input class="ui" type="text" name="first_name" placeholder="First name"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input class="ui" type="text" name="last_name" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="mobile icon"></i>
+                        <input id="phone_number" class="ui" type="text" name="phone_number" placeholder="Phone number     e.g. 010-1010-1010"/>
+                    </div>
+                </div>
+                <div class="ui error message"></div>
+                <button type="submit" class="ui fluid large teal submit button">Sign up</button>
+            </div>
+        </form>
     </div>
-  </form>
+    <div class="three wide column"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/js/register.js"></script>
 {% endblock %}

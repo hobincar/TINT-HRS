@@ -17,7 +17,7 @@ def register(request, register_form=UserRegistrationForm):
 
             if user:
                 messages.success(request, "You have successfully registered")
-                return redirect(reverse('profile'))
+                return redirect(reverse('login'))
 
             else:
                 messages.error(request, "unable to log you in at this time!")

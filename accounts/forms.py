@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import RegexValidator
+
 from accounts.models import User
 
 
@@ -13,10 +15,17 @@ class UserRegistrationForm(UserCreationForm):
         label='Password Confirmation',
         widget=forms.PasswordInput
     )
+    phone_regex = RegexValidator(regex=r'^\d{3}-\d{3,4}-\d{4}$',
+                                 message="Phone number must be entered in the format: '010-1010-1010'. Up to 11 digits allowed.")
+    phone_number = forms.CharField(
+        label='Phone Number',
+        widget=forms.TextInput,
+        validators=[phone_regex],
+    )
 
     class Meta:
         model = User
-        fields = ['email', 'password1', 'password2']
+        fields = ['email', 'password1', 'password2', 'first_name', 'last_name', 'phone_number']
         exclude = ['username']
 
     def clean_password2(self):
