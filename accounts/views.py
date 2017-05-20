@@ -28,7 +28,7 @@ def register(request, register_form=UserRegistrationForm):
     args = {'form': form}
     args.update(csrf(request))
 
-    return render(request, 'register.html', args)
+    return render(request, 'accounts/register.html', args)
 
 
 def login(request, success_url=None):
@@ -53,12 +53,12 @@ def login(request, success_url=None):
 
     args = {'form':form}
     args.update(csrf(request))
-    return render(request, 'login.html', args)
+    return render(request, 'accounts/login.html', args)
 
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'accounts/profile.html')
 
 
 def logout(request):
