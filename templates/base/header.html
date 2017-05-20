@@ -1,0 +1,31 @@
+{% if request.path == '/' %}
+<div class="ui inverted vertical masthead center aligned segment main-header">
+    <div class="ui container">
+        <div class="ui large secondary black pointing menu">
+{% else %}
+<div class="ui inverted vertical masthead center aligned segment">
+    <div class="ui container">
+        <div class="ui large secondary inverted pointing menu">
+{% endif %}
+            <a class="toc item">
+                <i class="sidebar icon"></i>
+            </a>
+            <a class="active item" href="/">Home</a>
+            <a class="item">Reservations</a>
+            <a class="item" href="/#information">Information</a>
+            <a class="item" href="/#facilities">Facilities</a>
+            <div class="right item">
+                <a class="ui inverted button" href="{% url 'login' %}">Log in</a>
+                <a class="ui inverted button" href="{% url 'register' %}">Sign Up</a>
+            </div>
+        </div>
+    </div>
+    {% if request.path == '/' %}
+    <div class="ui text container">
+        <h1 class="ui inverted header">
+            Team TINT
+        </h1>
+        <h2>Hotel Reservation System</h2>
+    </div>
+    {% endif %}
+</div>

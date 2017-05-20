@@ -17,16 +17,16 @@
         <!-- Following Menu -->
         <div class="ui large top fixed menu transition hidden">
             <div class="ui container">
-                <a class="active item">Home</a>
-                <a class="item">Work</a>
-                <a class="item">Company</a>
-                <a class="item">Careers</a>
+                <a class="active item" href="/">Home</a>
+                <a class="item">Reservations</a>
+                <a class="item" href="/#information">Information</a>
+                <a class="item" href="/#facilities">Facilities</a>
                 <div class="right menu">
                     <div class="item">
-                        <a class="ui button">Log in</a>
+                        <a class="ui button" href="{% url 'login' %}">Log in</a>
                     </div>
                     <div class="item">
-                        <a class="ui primary button">Sign Up</a>
+                        <a class="ui button" href="{% url 'register' %}">Sign Up</a>
                     </div>
                 </div>
             </div>
@@ -34,41 +34,27 @@
 
         <!-- Sidebar Menu -->
         <div class="ui vertical inverted sidebar menu">
-            <a class="active item">Home</a>
-            <a class="item">Work</a>
-            <a class="item">Company</a>
-            <a class="item">Careers</a>
-            <a class="item">Login</a>
-            <a class="item">Signup</a>
+            <a class="active item" href="/">Home</a>
+            <a class="item">Reservations</a>
+            <a class="item" href="/#information">Information</a>
+            <a class="item" href="/#facilities">Facilities</a>
+            <a class="item" href="{% url 'login' %}">Log in</a>
+            <a class="item" href="{% url 'register' %}">Sign Up</a>
         </div>
-
-        <!-- Header -->
-        <div class="ui inverted vertical masthead center aligned segment">
-            <div class="ui container">
-                <div class="ui large secondary inverted pointing menu">
-                    <a class="toc item">
-                        <i class="sidebar icon"></i>
-                    </a>
-                    <a class="active item">Home</a>
-                    <a class="item">Work</a>
-                    <a class="item">Company</a>
-                    <a class="item">Careers</a>
-                    <div class="right item">
-                        <a class="ui inverted button" href="{% url 'login' %}">Log in</a>
-                        <a class="ui inverted button" href="{% url 'register' %}">Sign Up</a>
+        
+        <div class="pusher">
+            <!-- Header -->
+            {% include "base/header.html" %}
+    
+            <div class="main-content">
+                <div class="ui grid">
+                    <div class="one wide column"></div>
+                    <div class="fourteen wide column">
+                        {% block content %}
+                        {% endblock %}
                     </div>
+                    <div class="one wide column"></div>
                 </div>
-            </div>
-        </div>
-
-        <div class="pusher main-content">
-            <div class="ui grid">
-                <div class="two wide column"></div>
-                <div class="twelve wide column">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-                <div class="two wide column"></div>
             </div>
         </div>
 

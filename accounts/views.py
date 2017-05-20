@@ -44,7 +44,7 @@ def login(request, success_url=None):
                 if success_url:
                     return redirect(reverse(success_url))
                 else:
-                    return redirect(reverse('profile'))
+                    return redirect('/', {'user': user})
             else:
                 form.add_error(None, "Your email or password was not recognised")
 
