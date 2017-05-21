@@ -44,7 +44,7 @@ def login(request, success_url=None):
                 if success_url:
                     return redirect(reverse(success_url))
                 else:
-                    return redirect('/', {'user': user})
+                    return redirect('/')
             else:
                 form.add_error(None, "Your email or password was not recognised")
 
@@ -64,4 +64,4 @@ def profile(request):
 def logout(request):
     auth.logout(request)
     messages.success(request, 'You have successfully logged out')
-    return redirect(reverse('index'))
+    return redirect(reverse('main'))

@@ -15,8 +15,13 @@
             <a class="item" href="/#information">Information</a>
             <a class="item" href="/#facilities">Facilities</a>
             <div class="right item">
+                {% if user.is_authenticated %}
+                <a class="ui inverted button" href="{% url 'login' %}">My page</a>
+                <a class="ui inverted button" href="{% url 'logout' %}">Log out</a>
+                {% else %}
                 <a class="ui inverted button" href="{% url 'login' %}">Log in</a>
                 <a class="ui inverted button" href="{% url 'register' %}">Sign Up</a>
+                {% endif %}
             </div>
         </div>
     </div>

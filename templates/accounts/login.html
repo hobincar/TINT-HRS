@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
 <div class="ui middle aligned center aligned grid">
     <div class="three wide column"></div>
     <div class="ten wide column">
@@ -26,6 +27,9 @@
                         </div>
                     </div>
                     
+                    {% if form.errors %}
+                        <p class="ui error">Your username and password didn't match. Please try again.</p>
+                    {% endif %}
                     <div class="ui error message"></div>
                     <button type="submit" class="ui fluid large teal submit button">Login</button>
                 </div>
