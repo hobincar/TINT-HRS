@@ -18,7 +18,7 @@
         <div class="ui large top fixed menu transition hidden">
             <div class="ui container">
                 <a class="active item" href="/">Home</a>
-                <a class="item">Reservations</a>
+                <a class="item" href="{% url 'reservations' %}">Reservations</a>
                 <a class="item" href="/#information">Information</a>
                 <a class="item" href="/#facilities">Facilities</a>
                 <div class="right menu">
@@ -35,7 +35,7 @@
         <!-- Sidebar Menu -->
         <div class="ui vertical inverted sidebar menu">
             <a class="active item" href="/">Home</a>
-            <a class="item">Reservations</a>
+            <a class="item" href="{% url 'reservations' %}">Reservations</a>
             <a class="item" href="/#information">Information</a>
             <a class="item" href="/#facilities">Facilities</a>
             <a class="item" href="{% url 'login' %}">Log in</a>
@@ -44,7 +44,7 @@
         
         <div class="pusher">
             <!-- Header -->
-            {% include "base/header.html" %}
+            {% include "bases/header.html" %}
     
             <div class="main-content">
                 <div class="ui grid">
@@ -63,6 +63,10 @@
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
             crossorigin="anonymous"></script>
+        <script
+              src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+              integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+              crossorigin="anonymous"></script>
         <script src="{% static 'js/semantic.min.js' %}"></script>
         <script src="{% static 'js/base.js' %}"></script>
         {% block script %}

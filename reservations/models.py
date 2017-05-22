@@ -17,11 +17,12 @@ class Reservation(models.Model):
     n_room = models.PositiveSmallIntegerField()
     n_adult = models.PositiveSmallIntegerField()
     n_child = models.PositiveSmallIntegerField()
-    coupon = models.BooleanField()
-    discount = models.PositiveSmallIntegerField()
+    coupon = models.ForeignKey(
+        'reservations.Coupon',
+        blank=True)
     room = models.ForeignKey('rooms.Room')
-    n_breakfase = models.PositiveSmallIntegerField()
-    n_babybed = models.PositiveSmallIntegerField()
+    n_breakfast = models.PositiveSmallIntegerField()
+    n_baby_bed = models.PositiveSmallIntegerField()
     addendum = models.TextField()
 
     card_type = models.CharField(
@@ -50,6 +51,13 @@ class Reservation(models.Model):
         blank=True
     )
 
-
     reserved_date = models.DateTimeField(
         default=timezone.now)
+
+
+class Coupon(models.Model):
+    image = models.ImageField()
+    discount = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return "%d%% Discount" % self.discount

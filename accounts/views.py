@@ -1,5 +1,4 @@
 from django.contrib import messages, auth
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.template.context_processors import csrf
@@ -54,11 +53,6 @@ def login(request, success_url=None):
     args = {'form':form}
     args.update(csrf(request))
     return render(request, 'accounts/login.html', args)
-
-
-@login_required(login_url='/accounts/login/')
-def profile(request):
-    return render(request, 'accounts/profile.html')
 
 
 def logout(request):

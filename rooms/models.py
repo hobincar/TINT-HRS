@@ -30,9 +30,10 @@ class Room(models.Model):
         default=False)
     f_recommendation = models.BooleanField(
         default=False)
-    image = models.ImageField()
+    image = models.ImageField(
+        upload_to='static/image_upload')
     capacity = models.PositiveSmallIntegerField()
-    cost_per_day = models.DecimalField(
+    cost_per_night = models.DecimalField(
         max_digits=8,
         decimal_places=2,
         default=0)
