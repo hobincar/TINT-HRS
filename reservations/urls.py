@@ -1,8 +1,7 @@
 from django.conf.urls import url
-from .views import reservation
+from .views import reserve
 
 
 urlpatterns = [
-    url(r'', reservation, name='reservations'),
-    url(r'^add/$', reservation, name='reserve'),
+    url(r'', reserve, name='reserve'),
 ]

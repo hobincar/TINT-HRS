@@ -14,14 +14,11 @@ class AccountUserManager(UserManager):
             raise ValueError('The given username must be set')
 
         email = self.normalize_email(email)
-        coupons = models.ForeignKey('reservations.Coupon')
-        reservations = models.ForeignKey('reservations.Reservation')
 
         user = self.model(username=email, email=email,
                           is_staff=is_staff, is_active=True,
                           is_superuser=is_superuser,
-                          date_joined=now, coupons=coupons,
-                          reservations=reservations, **extra_fields)
+                          date_joined=now, **extra_fields)
 
         user.set_password(password)
         user.save(using=self._db)
@@ -34,5 +31,6 @@ class User(AbstractUser):
     # number of custom attribute to our user class
 
     # in later units we'll be adding things like payment details!
+    coupons = models.ManyToManyField('reservations.Coupon')
 
     objects = AccountUserManager()

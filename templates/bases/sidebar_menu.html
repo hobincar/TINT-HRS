@@ -1,0 +1,13 @@
+<div class="ui vertical inverted sidebar menu">
+    <a class="active item" href="/">Home</a>
+    <a class="item" href="{% url 'reserve' %}">Reservations</a>
+    <a class="item" href="/#information">Information</a>
+    <a class="item" href="/#facilities">Facilities</a>
+    {% if user.is_authenticated %}
+    <a class="item" href="{% url 'login' %}">My page</a>
+    <a class="item" href="{% url 'logout' %}">Log out</a>
+    {% else %}
+    <a class="item" href="{% url 'login' %}">Log in</a>
+    <a class="item" href="{% url 'register' %}">Sign Up</a>
+    {% endif %}
+</div>

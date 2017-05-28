@@ -54,19 +54,11 @@
                             </div>
                         </div>
                     </div>
-                    <div id="check-out-item" class="item">
-                        <div class="content">
-                            <div class="ui fluid label">
-                                <i class="cubes icon"></i>
-                                <span id="n-room"></span>
-                            </div>
-                        </div>
-                    </div>
                     <div id="n-adult-child-item" class="item">
                         <div class="content">
                             <div class="ui fluid label">
                                 <i class="users icon"></i>
-                                <span id="n-adult"></span>, <span id="n-child"></span>
+                                <span id="n-adult"></span> Adults, <span id="n-child"></span> Childrens
                             </div>
                         </div>
                     </div>
@@ -79,19 +71,36 @@
                         </div>
                     </div>
                     
-                    <div class="item" style="display: none;">
+                    <div id="room-item" class="item" style="display: none;">
+                        <div class="content">
+                            <div class="ui fluid label">
+                                <i class="cubes icon"></i>
+                                <span id="room"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="breakfast-item" class="item" style="display: none;">
+                        <div class="content">
+                            <div class="ui fluid label">
+                                <i class="food icon"></i>
+                                <span id="n-breakfast"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="n-baby-bed-item" class="item" style="display: none;">
+                        <div class="content">
+                            <div class="ui fluid label">
+                                <i class="hotel icon"></i>
+                                <span id="n-baby-bed"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="total-cost-item" class="item" style="display: none;">
                         <div class="content">
                             <div class="ui big blue fluid label">
                                 <i class="dollar icon"></i>
                                 <span id="total-cost"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item" style="display:none;">
-                        <div class="content">
-                            <div class="ui fluid label">
-                                <i class="hotel icon"></i>
-                                <span id="room-type"></span>
                             </div>
                         </div>
                     </div>
@@ -110,7 +119,7 @@
 <form role="form" class="ui register large form" method="POST" action="{% url 'reserve' %}">{% csrf_token %}
     <!--Step1-->
     <div id="step1">
-        <div class="ui step1 form segment">
+        <div class="ui step1 segment">
             <div class="two fields">
                 <div class="field">
                     <label>When will you check in?</label>
@@ -119,7 +128,7 @@
                             <i class="calendar icon"></i>
                             Check In
                         </div>
-                        <input type="date" name="check_in">
+                        <input type="date" name="check_in" value="{{ reservation.check_in|date:'Y-m-d' }}">
                     </div>
                 </div>
                 <div class="field">
@@ -129,71 +138,57 @@
                             <i class="calendar icon"></i>
                             Check Out
                         </div>
-                        <input type="date" name="check_out">
+                        <input type="date" name="check_out" value="{{ reservation.check_out|date:'Y-m-d' }}">
                     </div>
                 </div>
             </div>
-            <div class="four fields">
-                <div class="three wide field">
-                    <label>How many Rooms? (~4)</label>
-                    <div class="ui floating selection dropdown labeled icon fluid button">
-                        <input type="hidden" name="n_room"/>
-                        <i class="cubes icon"></i>
-                        <div class="default text"># Room</div>
-                        <div class="menu">
-                            <div class="item">1 Room</div>
-                            <div class="item">2 Rooms</div>
-                            <div class="item">3 Rooms</div>
-                            <div class="item">4 Rooms</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="four wide field">
+            <div class="three fields">
+                <div class="field">
                     <label>How many Adults? (18~)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
                         <input type="hidden" name="n_adult"/>
                         <i class="users icon"></i>
-                        <div class="default text"># Adult</div>
+                        <div class="default text">1 Adult</div>
                         <div class="menu">
-                            <div class="item">1 Adult</div>
-                            <div class="item">2 Adults</div>
-                            <div class="item">3 Adults</div>
-                            <div class="item">4 Adults</div>
-                            <div class="item">5 Adults</div>
-                            <div class="item">6 Adults</div>
+                            <div class="item active selected" data-value="1">1 Adult</div>
+                            <div class="item" data-value="2">2 Adults</div>
+                            <div class="item" data-value="3">3 Adults</div>
+                            <div class="item" data-value="4">4 Adults</div>
+                            <div class="item" data-value="5">5 Adults</div>
+                            <div class="item" data-value="6">6 Adults</div>
                         </div>
                     </div>
                 </div>
-                <div class="four wide field">
+                <div class="field">
                     <label>How many Children?  (~17)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
                         <input type="hidden" name="n_child"/>
                         <i class="child icon"></i>
-                        <div class="default text"># Child</div>
+                        <div class="default text">0 Children</div>
                         <div class="menu">
-                            <div class="item">0 Children</div>
-                            <div class="item">1 Child</div>
-                            <div class="item">2 Children</div>
-                            <div class="item">3 Children</div>
-                            <div class="item">4 Children</div>
-                            <div class="item">5 Children</div>
-                            <div class="item">6 Children</div>
-                            <div class="item">7 Children</div>
-                            <div class="item">8 Children</div>
-                            <div class="item">9 Children</div>
+                            <div class="item active selected" data-value="0">0 Children</div>
+                            <div class="item" data-value="1">1 Child</div>
+                            <div class="item" data-value="2">2 Children</div>
+                            <div class="item" data-value="3">3 Children</div>
+                            <div class="item" data-value="4">4 Children</div>
+                            <div class="item" data-value="5">5 Children</div>
+                            <div class="item" data-value="6">6 Children</div>
+                            <div class="item" data-value="7">7 Children</div>
+                            <div class="item" data-value="8">8 Children</div>
+                            <div class="item" data-value="9">9 Children</div>
                         </div>
                     </div>
                 </div>
-                <div class="five wide field">
+                <div class="field">
                     <label>Will you use a coupon? (optional)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
                         <input type="hidden" name="coupon">
                         <i class="money icon"></i>
-                        <span class="text">Coupon</span>
+                        <span class="text">None</span>
                         <div class="menu">
-                            <div class="item">None</div>
-                            {% for coupon in user.coupons %}
-                                <div class="item">{{ coupon.discount }} Discount Coupon</div>
+                            <div class="item active selected" data-value="">None</div>
+                            {% for coupon in user.coupons.all %}
+                                <div class="item" data-value="{{coupon.id}}">{{ coupon.discount }} Discount Coupon</div>
                             {% endfor %}
                         </div>
                     </div>
@@ -207,14 +202,14 @@
     <div id="step2" style="display: none;">
         <div class="ui divided items">
             {% for room in rooms %}
-                <div class="item">
+                <div class="item room-item">
                     <div class="image">
                         <img class="ui rounded image" src={{ room.image.url }}>
                     </div>
                     <div class="content">
-                        <h5 class="header">{{ room.get_type_display }}</h5>
+                        <h5 class="header room-type">{{ room.get_type_display }}</h5>
                         <div class="meta">
-                            <span class="price">
+                            <span class="price cost-per-night">
                               <i class="dollar icon"></i>
                               {{ room.cost_per_night }} per night
                             </span>
@@ -259,10 +254,22 @@
                                     <i class="certificate icon"></i> Recommended
                                 </div>
                             {% endif %}
-                            <div class="ui right floated primary toggle inactive button">
-                                <i class="left checked calendar icon"></i>
-                                Reserve this room
+                            <div class="ui right floated">
+                                <label># Room</label>
+                                <div class="ui floating selection dropdown labeled icon fluid button">
+                                    <input type="hidden" name="n_room"/>
+                                    <i class="cubes icon"></i>
+                                    <div class="default text">0</div>
+                                    <div class="menu">
+                                        <div class="item active selected" data-value="0">0</div>
+                                        <div class="item" data-value="1">1</div>
+                                        <div class="item" data-value="2">2</div>
+                                        <div class="item" data-value="3">3</div>
+                                        <div class="item" data-value="4">4</div>
+                                    </div>
+                                </div>
                             </div>
+                            <input type="hidden" name="room_id" value="{{ room.id }}"/>
                         </div>
                     </div>
                 </div>
@@ -273,58 +280,60 @@
     
     <!--Step3-->
     <div id="step3" style="display: none;">
-        <div class="ui form segment">
+        <div class="ui segment">
             <div class="two fields">
                 <div class="eight wide field">
-                    <label>Will you have a Breakfast? (each $16.50)</label>
+                    <label>How many breakfast do you want? (each $16.50)</label>
                     <div class="ui labeled fluid input">
                         <div class="ui label">
                             <i class="food icon"></i>
                             Breakfast
                         </div>
-                        <input type="number" placeholder="">
+                        <input name="n_breakfast" type="number" placeholder="" value="0"/>
                     </div>
                 </div>
                 <div class="eight wide field">
                     <label>Will you need a Baby Bed? (each $10.00)</label>
-                    <div class="ui floating dropdown labeled search icon fluid button">
+                    <div class="ui floating selection dropdown labeled icon fluid button">
+                        <input type="hidden" name="n_baby_bed"/>
                         <i class="cubes icon"></i>
-                        <span class="text"> Baby Bed (up to 3) </span>
+                        <span class="text">0</span>
                         <div class="menu">
-                            <div class="item">1</div>
-                            <div class="item">2</div>
-                            <div class="item">3</div>
+                            <div class="item active selected" data-value="0">0</div>
+                            <div class="item" data-value="1">1</div>
+                            <div class="item" data-value="2">2</div>
+                            <div class="item" data-value="3">3</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="field">
                 <label>Additional Text</label>
-                <textarea rows="2"> If you want, we will help you. </textarea>
+                <textarea name="addendum" rows="2" placeholder="If you want, we will help you."></textarea>
             </div>
         </div>
     </div>
     
     <!--Step4-->
     <div id="step4" style="display: none;">
-        <form class="ui step4 form segment">
+        <div class="ui step4 segment">
             <h4 class="ui dividing header">Billing Information</h4>
             <div class="field required">
                 <label>Card Type</label>
                 <div class="ui selection dropdown">
-                    <input type="hidden" name="card[type]">
+                    <input type="hidden" name="card_type">
                     <div class="default text">Type</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <div class="item" data-value="visa">
+                        <div class="item" data-value="VS">
                             <i class="visa icon"></i>
                             Visa
                         </div>
-                        <div class="item" data-value="amex">
+                        <div class="item" data-value="AE">
                             <i class="amex icon"></i>
                             American Express
                         </div>
-                        <div class="item" data-value="discover">
+                        <div class="item" data-value="DC">
                             <i class="discover icon"></i>
                             Discover
                         </div>
@@ -334,17 +343,17 @@
             <div class="fields">
                 <div class="seven wide field required">
                     <label>Card Number</label>
-                    <input type="number" name="card[number]" maxlength="16" placeholder="Card #">
+                    <input type="number" name="card_number" maxlength="16" placeholder="Card #">
                 </div>
                 <div class="three wide field required">
                     <label>CVC</label>
-                    <input type="number" name="card[cvc]" maxlength="3" placeholder="CVC">
+                    <input type="number" name="card_cvc" maxlength="3" placeholder="CVC">
                 </div>
                 <div class="six wide field required">
                     <label>Expiration</label>
                     <div class="two fields">
                         <div class="field">
-                            <select class="ui fluid search dropdown" name="card[expire-month]">
+                            <select class="ui fluid search dropdown" name="card_expire_month">
                                 <option value="">Month</option>
                                 <option value="1">January</option>
                                 <option value="2">February</option>
@@ -361,7 +370,7 @@
                             </select>
                         </div>
                         <div class="field required">
-                            <input type="number" name="card[expire-year]" maxlength="4" placeholder="Year">
+                            <input type="number" name="card_expire_year" maxlength="4" placeholder="Year">
                         </div>
                     </div>
                 </div>
@@ -370,7 +379,7 @@
             <div id="receipt_field" class="field">
                 <label>Send Receipt To:</label>
                 <div class="ui fluid multiple search selection dropdown">
-                    <input type="hidden" name="receipt">
+                    <input id="send_receipt" type="hidden" name="send_receipt">
                     <i class="dropdown icon"></i>
                     <div class="default text">Contacts</div>
                     <div class="menu">
@@ -385,22 +394,20 @@
                 <div class="ui segment">
                     <div class="field">
                         <div class="ui toggle checkbox">
-                            <input type="checkbox" name="gift" tabindex="0" class="hidden">
+                            <input id="b_send_receipt" type="checkbox" name="b_send_receipt" tabindex="0" class="hidden">
                             <label>I will receive reservation reminders the day before check-in</label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="ui positive submit fluid button" id="payment_button" tabindex="0">
-                Pay for $2557.50
-            </div>
+            <button id="pay-submit-btn" type="submit" class="ui fluid large positive submit button">Pay</button>
             <div class="ui error message"></div>
-        </form>
+        </div>
     </div>
 </form>
 <div class="ui hidden divider"></div>
 
-<div style="margin-bottom: 10px;">
+<div>
     <div id="prev-btn" class="ui left floated left labeled red icon button" style="display: none;">
         <i class="left arrow icon"></i>
         Prev

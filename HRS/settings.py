@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'reservations',
     'rooms',
+    'multiselectfield',
 ]
 
 ######################## AUTH ########################

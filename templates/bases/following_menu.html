@@ -1,0 +1,24 @@
+<div class="ui large top fixed menu transition hidden">
+    <div class="ui container">
+        <a class="active item" href="/">Home</a>
+        <a class="item" href="{% url 'reserve' %}">Reservations</a>
+        <a class="item" href="/#information">Information</a>
+        <a class="item" href="/#facilities">Facilities</a>
+        <div class="right menu">
+            <div class="item">
+                {% if user.is_authenticated %}
+                <a class="ui button" href="{% url 'login' %}">My page</a>
+                {% else %}
+                <a class="ui button" href="{% url 'login' %}">Log in</a>
+                {% endif %}
+            </div>
+            <div class="item">
+                {% if user.is_authenticated %}
+                <a class="ui button" href="{% url 'logout' %}">Log out</a>
+                {% else %}
+                <a class="ui button" href="{% url 'register' %}">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

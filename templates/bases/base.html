@@ -15,32 +15,10 @@
     </head>
     <body>
         <!-- Following Menu -->
-        <div class="ui large top fixed menu transition hidden">
-            <div class="ui container">
-                <a class="active item" href="/">Home</a>
-                <a class="item" href="{% url 'reservations' %}">Reservations</a>
-                <a class="item" href="/#information">Information</a>
-                <a class="item" href="/#facilities">Facilities</a>
-                <div class="right menu">
-                    <div class="item">
-                        <a class="ui button" href="{% url 'login' %}">Log in</a>
-                    </div>
-                    <div class="item">
-                        <a class="ui button" href="{% url 'register' %}">Sign Up</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% include "bases/following_menu.html" %}
 
         <!-- Sidebar Menu -->
-        <div class="ui vertical inverted sidebar menu">
-            <a class="active item" href="/">Home</a>
-            <a class="item" href="{% url 'reservations' %}">Reservations</a>
-            <a class="item" href="/#information">Information</a>
-            <a class="item" href="/#facilities">Facilities</a>
-            <a class="item" href="{% url 'login' %}">Log in</a>
-            <a class="item" href="{% url 'register' %}">Sign Up</a>
-        </div>
+        {% include "bases/sidebar_menu.html" %}
         
         <div class="pusher">
             <!-- Header -->
