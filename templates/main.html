@@ -9,90 +9,89 @@
     <div class="ui middle aligned stackable equal height grid container">
         <div class="sixteen wide column">
             <form class="wide ui reservation form segment column">
+                <h2 class="ui header">
+                    <i class="lightning icon"></i>
+                    <div class="content">
+                        Quick Reservation
+                    </div>
+                </h2>
                 <div class="two fields">
-                    <div class="field">
+                    <div class="field required">
                         <label>When will you check in?</label>
                         <div class="ui labeled input">
                             <div class="ui green label">
                                 <i class="calendar icon"></i>
                                 Check In
                             </div>
-                            <input type="date" placeholder="mysite.com">
+                            <input type="date" name="check_in" value="{{ reservation.check_in|date:'Y-m-d' }}">
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field required">
                         <label>When will you check out?</label>
                         <div class="ui labeled input">
                             <div class="ui green label">
                                 <i class="calendar icon"></i>
                                 Check Out
                             </div>
-                            <input type="date" placeholder="mysite.com">
+                            <input type="date" name="check_out" value="{{ reservation.check_out|date:'Y-m-d' }}">
                         </div>
                     </div>
                 </div>
-                <div class="four fields">
-                    <div class="three wide field">
-                        <label>How many Rooms? (-3)</label>
-                        <div class="ui floating dropdown labeled search icon fluid button">
-                            <i class="cubes icon"></i>
-                            <span class="text"> 1 Room </span>
-                            <div class="menu">
-                                <div class="item">1 Room</div>
-                                <div class="item">2 Rooms</div>
-                                <div class="item">3 Rooms</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="four wide field">
-                        <label>How many Adults? (18+)</label>
-                        <div class="ui floating dropdown labeled search icon fluid button">
+                <div class="three fields">
+                    <div class="field required">
+                        <label>How many Adults? (18~)</label>
+                        <div class="ui floating selection dropdown labeled icon fluid button">
+                            <input type="hidden" name="n_adult"/>
                             <i class="users icon"></i>
-                            <span class="text"> 1 Adult </span>
+                            <div class="default text"> Choose # of Adults </div>
                             <div class="menu">
-                                <div class="item">1 Adult</div>
-                                <div class="item">2 Adults</div>
-                                <div class="item">3 Adults</div>
-                                <div class="item">4 Adults</div>
-                                <div class="item">5 Adults</div>
-                                <div class="item">6 Adults</div>
+                                <div class="item active selected" data-value="1">1 Adult</div>
+                                <div class="item" data-value="2">2 Adults</div>
+                                <div class="item" data-value="3">3 Adults</div>
+                                <div class="item" data-value="4">4 Adults</div>
+                                <div class="item" data-value="5">5 Adults</div>
+                                <div class="item" data-value="6">6 Adults</div>
                             </div>
                         </div>
                     </div>
-                    <div class="four wide field">
-                        <label>How many Children?  (-17)</label>
-                        <div class="ui floating dropdown labeled search icon fluid button">
+                    <div class="field required">
+                        <label>How many Children?  (~17)</label>
+                        <div class="ui floating selection dropdown labeled icon fluid button">
+                            <input type="hidden" name="n_child"/>
                             <i class="child icon"></i>
-                            <span class="text"> 0 Children </span>
+                            <div class="default text"> Choose # of Children </div>
                             <div class="menu">
-                                <div class="item">0 Children</div>
-                                <div class="item">1 Child</div>
-                                <div class="item">2 Children</div>
-                                <div class="item">3 Children</div>
-                                <div class="item">4 Children</div>
-                                <div class="item">5 Children</div>
-                                <div class="item">6 Children</div>
-                                <div class="item">7 Children</div>
-                                <div class="item">8 Children</div>
-                                <div class="item">9 Children</div>
+                                <div class="item active selected" data-value="0">0 Children</div>
+                                <div class="item" data-value="1">1 Child</div>
+                                <div class="item" data-value="2">2 Children</div>
+                                <div class="item" data-value="3">3 Children</div>
+                                <div class="item" data-value="4">4 Children</div>
+                                <div class="item" data-value="5">5 Children</div>
+                                <div class="item" data-value="6">6 Children</div>
+                                <div class="item" data-value="7">7 Children</div>
+                                <div class="item" data-value="8">8 Children</div>
+                                <div class="item" data-value="9">9 Children</div>
                             </div>
                         </div>
                     </div>
-                    <div class="five wide field">
+                    <div class="field">
                         <label>Will you use a coupon? (optional)</label>
-                        <div class="ui floating dropdown labeled search icon fluid button">
+                        <div class="ui floating selection dropdown labeled icon fluid button">
+                            <input type="hidden" name="coupon">
                             <i class="money icon"></i>
-                            <span class="text"> Nothing </span>
+                            <span class="text">None</span>
                             <div class="menu">
-                                <div class="item">Nothing</div>
-                                <div class="item">20% Discount Coupon</div>
+                                <div class="item active selected" data-value="">None</div>
+                                {% for coupon in user.coupons.all %}
+                                    <div class="item" data-value="{{coupon.id}}">{{ coupon.discount }} Discount Coupon</div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="ui right blue fluid button" id="to_reserve">
-                    Reserve
+
+                <div class="ui right blue fluid button disabled" id="quick_reservation">
+                    Please fill in the required fileds
                 </div>
             </form>
         </div>
@@ -101,9 +100,10 @@
 
 <div class="ui vertical stripe segment" id='information'>
     <div class="ui middle aligned stackable grid container">
-        <div class="row">
-            <h1 class="ui header" id="RoomInformation">"Room Information"</h1>
-        </div>
+        <h1 class="ui header" id="RoomInformation">
+            <i class="hotel icon"></i>
+            Room Information
+        </h1>
         <div class="row">
             <div class="eight wide column">
                 <h3 class="ui header">Deluxe room</h3>
@@ -141,9 +141,10 @@
 
 <div class="ui vertical stripe segment" id="facilities">
     <div class="ui middle aligned stackable grid container">
-        <div class="row">
-            <h1 class="ui header">"Facilities"</h1>
-        </div>
+        <h1 class="ui header">
+            <i class="building icon"></i>
+            Facilities
+        </h1>
         <div class="row">
             <div class="wide column">
                 <h3 class="ui header">Gymnasium</h3>
@@ -157,7 +158,7 @@
             <div class="five wide floated column">
                 <img src="/static/image/gym2.jpg" class="ui large bordered rounded image">
             </div>
-        
+
         </div>
         <div class="row">
             <div class="wide column">
@@ -186,4 +187,56 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $('.ui.dropdown').dropdown();
+
+    $('#quick_reservation').on('click', function () {
+        alert('TODO: MOVE TO RESERVATION PAGE');
+    })
+    $('input[name=check_in], input[name=check_out], input[name=n_adult], input[name=n_child], input[name=coupon]').change(function () {
+        console.log($(this).val());
+        let beEnable = true;
+        $('input[name=check_in], input[name=check_out], input[name=n_adult], input[name=n_child]').each(function () {
+            if($(this).val() == '') {
+                beEnable = false;
+            }
+        });
+        let isValid = isValidPeriod();
+        if (beEnable && isValid) {
+            $('#quick_reservation').text('Next');
+            $('.input.error.nag').remove();
+            $('#quick_reservation').removeClass('disabled');
+        } else if (beEnable && !isValid) {
+            $('.input.error.nag').remove();
+            // add notice nag
+            $('.ui .form').append(`
+                <div class="ui inline input error nag">
+                  <span class="title">
+                    Please Check Your Reservation Period
+                  </span>
+                  <i class="close icon"></i>
+                </div>`);
+            // show notice nag
+            $('.input.error.nag').show();
+            // bind click event
+            $('.input.error.nag i.close.icon').on('click', function () {
+                $('.input.error.nag').remove();
+            })
+        }
+    });
+    function isValidPeriod() {
+        let check_in_date = new Date($('input[name=check_in]').val());
+        let check_out_date = new Date($('input[name=check_out]').val());
+
+        if ( check_in_date < new Date() ) {
+            return false;
+        } else if ( (check_out_date - check_in_date) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 {% endblock %}

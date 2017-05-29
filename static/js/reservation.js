@@ -147,7 +147,7 @@ function progressModal() {
 
 function checkInput() {
     if (step == 1) {
-        $('#next-btn span').text('Next');
+        $('#next-btn span').text('Please fill in the required fileds');
         $('input[name=check_in], input[name=check_out], input[name=n_adult], input[name=n_child], input[name=coupon]').change(function () {
             let beEnable = true;
             $('input[name=check_in], input[name=check_out], input[name=n_adult], input[name=n_child]').each(function () {
@@ -157,6 +157,7 @@ function checkInput() {
             });
             let isValid = isValidPeriod();
             if (beEnable && isValid) {
+                $('#next-btn span').text('Next');
                 $('.input.error.nag').remove();
                 $('#next-btn').removeClass('disabled');
             } else if (beEnable && !isValid) {
@@ -183,7 +184,6 @@ function checkInput() {
             let total = 0;
             $('*').find('input[name=n_room]').each(function () {
                 if ($(this).val() != '') {
-                    console.log(total);
                     total += Number($(this).val());
                 }
                 if (total > 0) {
@@ -196,8 +196,21 @@ function checkInput() {
             })
         });
     } else if (step == 3) {
-        $('#next-btn span').text('Next');
+        $('#next-btn span').text("I don't need any options");
         $('#next-btn').removeClass('disabled');
+        $('input[name=n_breakfast], input[name=n_baby_bed], textarea#additional_help').change(function () {
+            let hasOptions = false;
+            $('input[name=n_breakfast], input[name=n_baby_bed], textarea#additional_help').each(function () {
+                if(Number($(this).val()) !== 0) {
+                    hasOptions = true;
+                }
+            });
+            if (hasOptions) {
+                $('#next-btn span').text("Next");
+            } else {
+                $('#next-btn span').text("I don't need any options");
+            }
+        });
     }
 }
 

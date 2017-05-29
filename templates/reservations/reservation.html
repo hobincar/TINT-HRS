@@ -101,7 +101,7 @@
     <div id="step1">
         <div class="ui step1 segment">
             <div class="two fields">
-                <div class="field">
+                <div class="field required">
                     <label>When will you check in?</label>
                     <div class="ui labeled input">
                         <div class="ui green label">
@@ -111,7 +111,7 @@
                         <input type="date" name="check_in" value="{{ reservation.check_in|date:'Y-m-d' }}">
                     </div>
                 </div>
-                <div class="field">
+                <div class="field required">
                     <label>When will you check out?</label>
                     <div class="ui labeled input">
                         <div class="ui green label">
@@ -123,7 +123,7 @@
                 </div>
             </div>
             <div class="three fields">
-                <div class="field">
+                <div class="field required">
                     <label>How many Adults? (18~)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
                         <input type="hidden" name="n_adult"/>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="field">
+                <div class="field required">
                     <label>How many Children?  (~17)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
                         <input type="hidden" name="n_child"/>
@@ -269,7 +269,7 @@
                             <i class="food icon"></i>
                             Breakfast
                         </div>
-                        <input name="n_breakfast" type="number" placeholder="" value="0"/>
+                        <input name="n_breakfast" type="number" min="0" placeholder="" value="0"/>
                     </div>
                 </div>
                 <div class="eight wide field">
@@ -288,8 +288,8 @@
                 </div>
             </div>
             <div class="field">
-                <label>Additional Text</label>
-                <textarea name="addendum" rows="2" placeholder="If you want, we will help you."></textarea>
+                <label>Additional Help</label>
+                <textarea name="addendum" rows="2" id='additional_help' placeholder="If you want, we will help you."></textarea>
             </div>
         </div>
     </div>
