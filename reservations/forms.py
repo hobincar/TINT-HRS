@@ -4,7 +4,6 @@ from .models import Reservation
 
 
 class ReservationForm(forms.ModelForm):
-
     class Meta:
         model = Reservation
         fields = ['check_in', 'check_out', 'n_adult', 'n_child', 'n_breakfast', 'n_baby_bed', 'addendum',

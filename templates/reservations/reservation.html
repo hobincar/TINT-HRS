@@ -9,7 +9,7 @@
 
 
 <!--Step Navigator-->
-<div class="ui container center aligned ordered steps">
+<div class="ui fluid container center aligned ordered steps">
     <div id="step1-nav" class="active step">
         <div class="content">
             <div class="title">Enter Information</div>
@@ -128,7 +128,7 @@
                     <div class="ui floating selection dropdown labeled icon fluid button">
                         <input type="hidden" name="n_adult"/>
                         <i class="users icon"></i>
-                        <div class="default text">1 Adult</div>
+                        <div class="default text"> Choose # of Adults </div>
                         <div class="menu">
                             <div class="item active selected" data-value="1">1 Adult</div>
                             <div class="item" data-value="2">2 Adults</div>
@@ -144,7 +144,7 @@
                     <div class="ui floating selection dropdown labeled icon fluid button">
                         <input type="hidden" name="n_child"/>
                         <i class="child icon"></i>
-                        <div class="default text">0 Children</div>
+                        <div class="default text"> Choose # of Children </div>
                         <div class="menu">
                             <div class="item active selected" data-value="0">0 Children</div>
                             <div class="item" data-value="1">1 Child</div>
@@ -392,9 +392,9 @@
         <i class="left arrow icon"></i>
         Prev
     </div>
-    <div id="next-btn" class="ui right floated right labeled blue icon button">
+    <div id="next-btn" class="ui right floated right labeled blue icon button disabled">
         <i class="right arrow icon"></i>
-        Next
+        <span> Next </span>
     </div>
 </div>
 
