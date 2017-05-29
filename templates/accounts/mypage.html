@@ -1,0 +1,95 @@
+{% extends 'bases/base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/mypage.css">
+{% endblock %}
+
+{% block content %}
+<div class="three wide column">
+    <div class="ui vertical fluid tabular menu">
+        <a class="active item" data-tab="first">
+            Reservation
+        </a>
+        <a class="item" data-tab="second">
+            My information
+        </a>
+        <a class="item" data-tab="third">
+            My coupon
+        </a>
+    </div>
+</div>
+
+<div class="twelve wide stretched column main-content">
+    <div class="ui bottom attached active tab segment" data-tab="first">
+        <div class="ui divided items">
+            {% for reservation in user.reservations.all %}
+            <div class="ui fluid green card item">
+                <div class="content">
+                    <div class="header">Reservation Summary</div>
+                    <div class="description">
+                        <div class="ui list">
+                            <div id="check-in-item" class="meta item">
+                                <div class="ui fluid">
+                                    <i class="calendar icon"></i>
+                                    <span id="check-in"></span> ~ <span id="check-out"></span>
+                                </div>
+                            </div>
+                            <div id="n-adult-child-item" class="meta item">
+                                <div class="ui fluid">
+                                    <i class="users icon"></i>
+                                    <span id="n-adult"></span> Adults, <span id="n-child"></span> Childrens
+                                </div>
+                            </div>
+                            <div id="coupon-item" class="meta item">
+                                <div class="ui fluid">
+                                    <i class="money icon"></i>
+                                    <span id="coupon"></span>
+                                </div>
+                            </div>
+                            
+                            <div id="room-item" class="meta item">
+                                <div class="ui fluid">
+                                    <i class="cubes icon"></i>
+                                    <span id="room"></span>
+                                </div>
+                            </div>
+                            
+                            <div id="breakfast-item" class="meta item">
+                                <div class="ui fluid">
+                                    <i class="food icon"></i>
+                                    <span id="n-breakfast"></span>
+                                </div>
+                            </div>
+                            <div id="n-baby-bed-item" class="meta item">
+                                <div class="ui fluid">
+                                    <i class="hotel icon"></i>
+                                    <span id="n-baby-bed"></span>
+                                </div>
+                            </div>
+                            <div id="total-cost-item" class="meta item">
+                                <div class="ui big blue fluid label">
+                                    <i class="dollar icon"></i>
+                                    <span id="total-cost"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="ui bottom attached tab segment" data-tab="second">
+        My information
+    </div>
+    
+    <div class="ui bottom attached tab segment" data-tab="third">
+        My coupon
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/mypage.js"></script>
+{% endblock %}

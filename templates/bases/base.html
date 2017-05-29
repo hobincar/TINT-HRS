@@ -24,15 +24,13 @@
             <!-- Header -->
             {% include "bases/header.html" %}
     
-            <div class="main-content">
-                <div class="ui grid">
+            <div class="ui grid main-content">
                     <div class="one wide column"></div>
-                    <div class="fourteen wide column">
+                    <div class="ui grid fourteen wide column">
                         {% block content %}
                         {% endblock %}
                     </div>
                     <div class="one wide column"></div>
-                </div>
             </div>
         </div>
 

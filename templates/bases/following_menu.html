@@ -5,20 +5,13 @@
         <a class="item" href="/#information">Information</a>
         <a class="item" href="/#facilities">Facilities</a>
         <div class="right menu">
-            <div class="item">
-                {% if user.is_authenticated %}
-                <a class="ui button" href="{% url 'login' %}">My page</a>
-                {% else %}
-                <a class="ui button" href="{% url 'login' %}">Log in</a>
-                {% endif %}
-            </div>
-            <div class="item">
-                {% if user.is_authenticated %}
-                <a class="ui button" href="{% url 'logout' %}">Log out</a>
-                {% else %}
-                <a class="ui button" href="{% url 'register' %}">Sign Up</a>
-                {% endif %}
-            </div>
+            {% if user.is_authenticated %}
+            <a class="item" href="{% url 'mypage' %}">My page</a>
+            <a class="item" href="{% url 'logout' %}">Log out</a>
+            {% else %}
+            <a class="item" href="{% url 'login' %}">Log in</a>
+            <a class="item" href="{% url 'register' %}">Sign Up</a>
+            {% endif %}
         </div>
     </div>
 </div>

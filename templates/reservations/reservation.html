@@ -43,74 +43,54 @@
     <div class="ui fluid green card ten wide column">
         <div class="content">
             <div class="header">Reservation Summary</div>
-            <div class="meta"></div>
             <div class="description">
                 <div class="ui list">
-                    <div id="check-in-item" class="item">
-                        <div class="content">
-                            <div class="ui fluid label">
-                                <i class="calendar icon"></i>
-                                <span id="check-in"></span> ~ <span id="check-out"></span>
-                            </div>
+                    <div id="check-in-item" class="meta item">
+                        <div class="ui fluid label">
+                            <i class="calendar icon"></i>
+                            <span id="check-in"></span> ~ <span id="check-out"></span>
                         </div>
                     </div>
-                    <div id="n-adult-child-item" class="item">
-                        <div class="content">
-                            <div class="ui fluid label">
-                                <i class="users icon"></i>
-                                <span id="n-adult"></span> Adults, <span id="n-child"></span> Childrens
-                            </div>
+                    <div id="n-adult-child-item" class="meta item">
+                        <div class="ui fluid label">
+                            <i class="users icon"></i>
+                            <span id="n-adult"></span> Adults, <span id="n-child"></span> Childrens
                         </div>
                     </div>
-                    <div id="coupon-item" class="item">
-                        <div class="content">
-                            <div class="ui fluid label">
-                                <i class="money icon"></i>
-                                <span id="coupon"></span>
-                            </div>
+                    <div id="coupon-item" class="meta item">
+                        <div class="ui fluid label">
+                            <i class="money icon"></i>
+                            <span id="coupon"></span>
                         </div>
                     </div>
                     
-                    <div id="room-item" class="item" style="display: none;">
-                        <div class="content">
-                            <div class="ui fluid label">
-                                <i class="cubes icon"></i>
-                                <span id="room"></span>
-                            </div>
+                    <div id="room-item" class="meta item" style="display: none;">
+                        <div class="ui fluid label">
+                            <i class="cubes icon"></i>
+                            <span id="room"></span>
                         </div>
                     </div>
                     
-                    <div id="breakfast-item" class="item" style="display: none;">
-                        <div class="content">
-                            <div class="ui fluid label">
-                                <i class="food icon"></i>
-                                <span id="n-breakfast"></span>
-                            </div>
+                    <div id="breakfast-item" class="meta item" style="display: none;">
+                        <div class="ui fluid label">
+                            <i class="food icon"></i>
+                            <span id="n-breakfast"></span>
                         </div>
                     </div>
-                    <div id="n-baby-bed-item" class="item" style="display: none;">
-                        <div class="content">
-                            <div class="ui fluid label">
-                                <i class="hotel icon"></i>
-                                <span id="n-baby-bed"></span>
-                            </div>
+                    <div id="n-baby-bed-item" class="meta item" style="display: none;">
+                        <div class="ui fluid label">
+                            <i class="hotel icon"></i>
+                            <span id="n-baby-bed"></span>
                         </div>
                     </div>
-                    <div id="total-cost-item" class="item" style="display: none;">
-                        <div class="content">
-                            <div class="ui big blue fluid label">
-                                <i class="dollar icon"></i>
-                                <span id="total-cost"></span>
-                            </div>
+                    <div id="total-cost-item" class="meta item" style="display: none;">
+                        <div class="ui big blue fluid label">
+                            <i class="dollar icon"></i>
+                            <span id="total-cost"></span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id="image-item" class="six wide column" style="display: none">
-        <div class="ui fluid rounded image">
-            <img id="image" src=""/>
         </div>
     </div>
     <div class="ui divider"></div>
@@ -415,6 +395,24 @@
     <div id="next-btn" class="ui right floated right labeled blue icon button">
         <i class="right arrow icon"></i>
         Next
+    </div>
+</div>
+
+
+<!--Payment Modal-->
+<div class="ui small pay modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Payment is in progress automatically.
+    </div>
+    <div class="content">
+        <div class="description">
+            <p>If this window persists, please try again.</p>
+            <p>Thank you for using our hotel.</p>
+            <div class="ui indicating progress">
+                <div class="bar"></div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -2,6 +2,8 @@ from django.contrib import messages, auth
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.template.context_processors import csrf
+from django.contrib.auth.decorators import login_required
+
 from accounts.forms import UserRegistrationForm, UserLoginForm
 
 
@@ -55,7 +57,13 @@ def login(request, success_url=None):
     return render(request, 'accounts/login.html', args)
 
 
+@login_required
 def logout(request):
     auth.logout(request)
     messages.success(request, 'You have successfully logged out')
     return redirect(reverse('main'))
+
+
+@login_required
+def mypage(request):
+    return render(request, 'accounts/mypage.html')

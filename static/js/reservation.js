@@ -99,4 +99,41 @@ $(document)
 
     $('.ui.dropdown').dropdown();
     $('.ui.toggle.checkbox').checkbox('set checked');
-})
+});
+
+function progressModal() {
+  // show modal
+  $('.ui.pay.modal')
+    .modal('show')
+  ;
+
+  // progressing setting
+  var
+    $progress       = $('.ui.progress'),
+    $button         = $(this),
+    updateEvent
+  ;
+    // restart to zero
+  clearInterval(window.fakeProgress)
+  $progress.progress('reset');
+    // updates every 20ms until complete
+  window.fakeProgress = setInterval(function() {
+    $progress.progress('increment');
+    $button.text( $progress.progress('get value') );
+      // stop incrementing when complete
+    if($progress.progress('is complete')) {
+      clearInterval(window.fakeProgress)
+    }
+  }, 20);
+
+  // progress bar setting
+  $('.ui.progress')
+    .progress({
+      duration : 100,
+      total    : 100,
+      text     : {
+        active: '{value} of {total} done'
+      }
+    })
+  ;
+}
