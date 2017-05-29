@@ -2,11 +2,15 @@ step = 1;
 
 $(document)
 .ready(function() {
+    checkInput();
     $('#next-btn').on('click', () => {
+        $('#next-btn').addClass('disabled');
+
         if (step < 4) {
             $(`#step${step}-nav`).switchClass('active', 'completed');
             $(`#step${step}`).hide();
             step++;
+            checkInput();
             $(`#step${step}`).show();
             $(`#step${step}-nav`).switchClass('disable', 'active');
 
@@ -17,7 +21,6 @@ $(document)
 
         if (step == 2) {
             $('#prev-btn').show();
-
             $('#reservation-summary').show();
             $('#check-in').text($('input[name=check_in]').val());
             $('#check-out').text($('input[name=check_out]').val());
@@ -27,7 +30,7 @@ $(document)
         }
         else if (step == 3) {
             let room_desc = "";
-            for (room of $('.room-item')) {
+            for (let room of $('.room-item')) {
                 let n_room = $(room).find('input[name=n_room]').val();
                 if (n_room > 0) {
                     let room_type = $(room).find('.room-type').text();
@@ -72,6 +75,8 @@ $(document)
             $(`#step${step}-nav`).switchClass('active', 'disable');
             $(`#step${step}`).hide();
             step--;
+            checkInput();
+            $('#next-btn').removeClass('disabled');
             $(`#step${step}`).show();
             $(`#step${step}-nav`).switchClass('completed', 'active');
 
@@ -99,6 +104,8 @@ $(document)
 
     $('.ui.dropdown').dropdown();
     $('.ui.toggle.checkbox').checkbox('set checked');
+
+    $('#pay-submit-btn').on('click', progressModal);
 });
 
 function progressModal() {
@@ -136,4 +143,86 @@ function progressModal() {
       }
     })
   ;
+}
+
+function checkInput() {
+    if (step == 1) {
+        $('#next-btn span').text('Please fill in the required fileds');
+        $('input[name=check_in], input[name=check_out], input[name=n_adult], input[name=n_child], input[name=coupon]').change(function () {
+            let beEnable = true;
+            $('input[name=check_in], input[name=check_out], input[name=n_adult], input[name=n_child]').each(function () {
+                if($(this).val() == '') {
+                    beEnable = false;
+                }
+            });
+            let isValid = isValidPeriod();
+            if (beEnable && isValid) {
+                $('#next-btn span').text('Next');
+                $('.input.error.nag').remove();
+                $('#next-btn').removeClass('disabled');
+            } else if (beEnable && !isValid) {
+                $('.input.error.nag').remove();
+                // add notice nag
+                $('.ui .form').append(`
+                    <div class="ui inline input error nag">
+                      <span class="title">
+                        Please Check Your Reservation Period
+                      </span>
+                      <i class="close icon"></i>
+                    </div>`);
+                // show notice nag
+                $('.input.error.nag').show();
+                // bind click event
+                $('.input.error.nag i.close.icon').on('click', function () {
+                    $('.input.error.nag').remove();
+                })
+            }
+        });
+    } else if (step == 2) {
+        $('#next-btn span').text('Please choose room');
+        $('input[name=n_room]').change(function () {
+            let total = 0;
+            $('*').find('input[name=n_room]').each(function () {
+                if ($(this).val() != '') {
+                    total += Number($(this).val());
+                }
+                if (total > 0) {
+                    $('#next-btn span').text('Reserve ' + total + ' rooms');
+                    $('#next-btn').removeClass('disabled');
+                } else {
+                    $('#next-btn span').text('Please choose room');
+                    $('#next-btn').addClass('disabled');
+                }
+            })
+        });
+    } else if (step == 3) {
+        $('#next-btn span').text("I don't need any options");
+        $('#next-btn').removeClass('disabled');
+        $('input[name=n_breakfast], input[name=n_baby_bed], textarea#additional_help').change(function () {
+            let hasOptions = false;
+            $('input[name=n_breakfast], input[name=n_baby_bed], textarea#additional_help').each(function () {
+                if(Number($(this).val()) !== 0) {
+                    hasOptions = true;
+                }
+            });
+            if (hasOptions) {
+                $('#next-btn span').text("Next");
+            } else {
+                $('#next-btn span').text("I don't need any options");
+            }
+        });
+    }
+}
+
+function isValidPeriod() {
+    let check_in_date = new Date($('input[name=check_in]').val());
+    let check_out_date = new Date($('input[name=check_out]').val());
+
+    if ( check_in_date < new Date() ) {
+        return false;
+    } else if ( (check_out_date - check_in_date) > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
