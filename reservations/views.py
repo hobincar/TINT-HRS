@@ -25,6 +25,7 @@ def reserve(request):
             # ROOM
             n_room_list = request.POST.getlist('n_room')
             room_id_list = request.POST.getlist('room_id')
+            reservation.total_cost = 0
             reservation.save()
             room_cost = 0
             for n_room, room_id in zip(n_room_list, room_id_list):
@@ -37,9 +38,9 @@ def reserve(request):
                     )
                     r.save()
 
-                    room_cost += int(n_room) * room.cost_per_night
+                    room_cost += int(n_room) * float(room.cost_per_night)
 
-            total_cost = room_cost + 16.50*form.cleaned_data['n_breakfast'] + 10.00*form.cleaned_data['n_baby_bed']
+            total_cost = room_cost + 16.50*float(form.cleaned_data['n_breakfast']) + 10.00*float(form.cleaned_data['n_baby_bed'])
 
             # COUPON
             coupon_id = form.data['coupon']

@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'HRS.context_processors.media_root',
             ],
         },
     },
@@ -133,8 +134,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'static'))
-MEDIA_URL = '/static/image_upload/'
+STATIC_ROOT = '/static/'
+MEDIA_ROOT = '/static/image_upload/'
 #STATICFILES_DIRS = (
 #    os.path.join(BASE_DIR, 'static'),
 #)

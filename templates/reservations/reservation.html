@@ -184,7 +184,7 @@
             {% for room in rooms %}
                 <div class="item room-item">
                     <div class="image">
-                        <img class="ui rounded image" src={{ room.image.url }}>
+                        <img class="ui rounded image" src="{{ MEDIA_ROOT }}{{ room.image.url }}">
                     </div>
                     <div class="content">
                         <h5 class="header room-type">{{ room.get_type_display }}</h5>
