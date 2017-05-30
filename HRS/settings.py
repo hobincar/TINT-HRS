@@ -136,9 +136,9 @@ STATIC_URL = '/static/'
 
 #STATIC_ROOT = '/static/'
 MEDIA_ROOT = '/static/image_upload/'
-STATICFILES_DIRS = (
-    'static',
-)
+#STATICFILES_DIRS = (
+#    'static',
+#)
 
 LOGIN_REDIRECT_URL = '/'
 
