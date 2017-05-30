@@ -10,10 +10,11 @@ class Reservation(models.Model):
         limit_choices_to={'is_staff': False},
         on_delete=models.CASCADE,
         related_name='reservations')
-    staff = models.ForeignKey('accounts.User',
-                              limit_choices_to={'is_staff': True},
-                              related_name='staff_accounts_user',
-                              blank=True, null=True)
+    staff = models.ForeignKey(
+        'accounts.User',
+        limit_choices_to={'is_staff': True},
+        related_name='staff_accounts_user',
+        blank=True, null=True)
     check_in = models.DateField()
     check_out = models.DateField()
     rooms = models.ManyToManyField('rooms.Room', through='RoomReservationInfo')
@@ -73,3 +74,4 @@ class Coupon(models.Model):
 
     def __str__(self):
         return "%d%% Discount" % self.discount
+
