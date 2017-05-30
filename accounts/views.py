@@ -5,6 +5,7 @@ from django.template.context_processors import csrf
 from django.contrib.auth.decorators import login_required
 
 from accounts.forms import UserRegistrationForm, UserLoginForm
+from reservations.forms import ReservationModificationForm
 
 
 def register(request, register_form=UserRegistrationForm):
@@ -66,4 +67,7 @@ def logout(request):
 
 @login_required
 def mypage(request):
-    return render(request, 'accounts/mypage.html')
+    form = ReservationModificationForm()
+    args = {'form': form}
+    args.update(csrf(request))
+    return render(request, 'accounts/mypage.html', args)

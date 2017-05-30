@@ -50,6 +50,8 @@ class Reservation(models.Model):
         blank=True, null=True
     )
 
+    total_cost = models.PositiveIntegerField()
+
     reserved_date = models.DateTimeField(
         default=timezone.now)
     modified_date = models.DateTimeField(
