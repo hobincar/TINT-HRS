@@ -7,7 +7,8 @@ from django.template.context_processors import csrf
 from django.utils import timezone
 
 from .models import Reservation, RoomReservationInfo, Coupon
-from .forms import ReservationForm, ReservationModificationForm
+from .forms import ReservationForm, ReservationModificationForm, ReservationCancelationForm
+from accounts.forms import UserRegistrationForm
 from rooms.models import Room
 from accounts.models import User
 
@@ -52,7 +53,7 @@ def reserve(request):
             reservation.total_cost = total_cost
 
             # SEND_RECEIPT
-            if form.data['b_send_receipt'] == "on":
+            if 'b_send_receipt' in form.data and form.data['b_send_receipt'] == "on":
                 send_receipt = form.data['send_receipt']
                 reservation.send_receipt = ''
                 if "phone" in send_receipt.lower():
@@ -112,5 +113,25 @@ def modify(request):
 
     form = ReservationModificationForm()
     args = {'form': form}
+    args.update(csrf(request))
+    return render(request, 'accounts/mypage.html', args)
+
+
+@login_required
+def cancel(request):
+    form = ReservationCancelationForm(request.POST)
+    if form.is_valid():
+        reservation = Reservation.objects.get(id=form.data['reservation_id'])
+        if reservation.customer == request.user:
+            reservation.delete()
+
+    reservation_modification_form = ReservationModificationForm()
+    registration_form = UserRegistrationForm()
+    reservation_cancelation_form = ReservationCancelationForm()
+    args = {
+        'reservation_modification_form': reservation_modification_form,
+        'user_modification_form': registration_form,
+        'reservation_cancelation_form': reservation_cancelation_form,
+    }
     args.update(csrf(request))
     return render(request, 'accounts/mypage.html', args)

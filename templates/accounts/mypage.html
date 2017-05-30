@@ -144,9 +144,9 @@
                             </div>
                             {% endif %}
                             <div class="ui buttons right floated">
-                                <button class="ui blue button" onclick="$('.modify.modal.item{{forloop.counter}}').modal('show')">Modify</button>
+                                <button class="ui blue button" onclick="$('.modify.modal.item{{ forloop.counter }}').modal('show')">Modify</button>
                                 <div class="or"></div>
-                                <button class="ui red button">Cancel</button>
+                                <button class="ui red button" onclick="$('.cancel-reservation.modal.item{{ forloop.counter }}').modal('show')">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -352,6 +352,22 @@
                             <div class="ui button blue" onclick="$('.modify.modal.item{{forloop.counter}}').modal('show')">Back to Modify</div>
                             <div class="ui button red" onclick="$('.pay.modal.item{{forloop.counter}}').modal('hide')" tabindex="1">Cancel</div>
                         </div>
+                    </div>
+                </div>
+                
+                
+                <!-- Cancel Modal -->
+                <div class="ui small cancel-reservation modal item{{ forloop.counter }}">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Are you sure? The reservation fee will NOT BE REFUNDED.
+                    </div>
+                    <div class="actions">
+                        <form method="POST" action="{% url 'cancel_reservation' %}">{% csrf_token %}
+                            <input type="hidden" name="reservation_id" value="{{ reservation.id }}"/>
+                            <input type="submit" class="ui approve button" value="Yes"/>
+                            <div class="ui cancel button" onclick="$('.cancel-reservation.modal.item{{ forloop.counter }}').modal('hide')">No</div>
+                        </form>
                     </div>
                 </div>
             </div>

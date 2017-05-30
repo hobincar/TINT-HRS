@@ -21,3 +21,7 @@ class ReservationModificationForm(forms.Form):
     n_breakfast = forms.IntegerField()
     n_baby_bed = forms.IntegerField()
     addendum = forms.CharField(widget=forms.Textarea, required=False)
+
+
+class ReservationCancelationForm(forms.Form):
+    reservation_id = forms.TextInput()

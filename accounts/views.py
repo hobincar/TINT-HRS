@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import User
 from .forms import UserRegistrationForm, UserLoginForm, UserModificationForm
-from reservations.forms import ReservationModificationForm
+from reservations.forms import ReservationModificationForm, ReservationCancelationForm
 
 
 def register(request, register_form=UserRegistrationForm):
@@ -74,9 +74,11 @@ def logout(request):
 def mypage(request):
     reservation_modification_form = ReservationModificationForm()
     registration_form = UserRegistrationForm()
+    reservation_cancelation_form = ReservationCancelationForm()
     args = {
         'reservation_modification_form': reservation_modification_form,
         'user_modification_form': registration_form,
+        'reservation_cancelation_form': reservation_cancelation_form,
     }
     args.update(csrf(request))
     return render(request, 'accounts/mypage.html', args)
@@ -103,9 +105,11 @@ def modify_info(request):
             form.add_error(None, "You entered wrong password!")
 
     reservation_modification_form = ReservationModificationForm()
+    reservation_cancelation_form = ReservationCancelationForm()
     args = {
         'reservation_modification_form': reservation_modification_form,
         'user_modification_form': form,
+        'reservation_cancelation_form': reservation_cancelation_form,
     }
     args.update(csrf(request))
     return render(request, 'accounts/mypage.html', args)
