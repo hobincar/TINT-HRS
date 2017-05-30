@@ -8,10 +8,10 @@
 <div class="three wide column">
     <div class="ui vertical fluid tabular menu">
         <a class="active item" data-tab="first">
-            Reservation
+            My information
         </a>
         <a class="item" data-tab="second">
-            My information
+            Reservation
         </a>
         <a class="item" data-tab="third">
             My coupon
@@ -20,7 +20,62 @@
 </div>
 
 <div class="twelve wide stretched column main-content">
+    
     <div class="ui bottom attached active tab segment" data-tab="first">
+        <form role="form" class="ui modify-info large form" method="POST" action="{% url 'modify_info' %}">{% csrf_token %}
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="mail icon"></i>
+                        <input id="email" class="ui" type="text" name="email" placeholder="E-mail address" value="{{ user.email }}" readonly/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="old_password" type="password" name="old_password" placeholder="Old Password" required/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="password1" type="password" name="password1" placeholder="New Password"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="password2" type="password" name="password2" placeholder="New Password confirmation"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input class="ui" type="text" name="first_name" placeholder="First name" value="{{ user.first_name }}"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input class="ui" type="text" name="last_name" placeholder="Last Name" value="{{ user.last_name }}"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="mobile icon"></i>
+                        <input id="phone_number" class="ui" type="text" name="phone_number" placeholder="Phone number     e.g. 010-1010-1010" value="{{ user.phone_number }}" />
+                    </div>
+                </div>
+                <div class="ui error message"></div>
+                {% if user_modification_form.errors %}
+                    {{ user_modification_form.non_field_errors }}
+                {% endif %}
+                <button type="submit" class="ui fluid large teal submit button">Save</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="ui bottom attached tab segment" data-tab="second">
         <div class="ui divided items">
             {% for reservation in user.reservations.all %}
             <div class="ui padded segment item{{forloop.counter}}">
@@ -303,10 +358,6 @@
             </div>
             {% endfor %}
         </div>
-    </div>
-    
-    <div class="ui bottom attached tab segment" data-tab="second">
-        My information
     </div>
     
     <div class="ui bottom attached tab segment" data-tab="third">
