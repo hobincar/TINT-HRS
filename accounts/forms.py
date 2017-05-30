@@ -53,3 +53,14 @@ class UserRegistrationForm(UserCreationForm):
 class UserLoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class UserModificationForm(forms.Form):
+    old_password = forms.PasswordInput()
+    password1 = forms.CharField(required=False, widget=forms.PasswordInput)
+    password2 = forms.CharField(required=False, widget=forms.PasswordInput)
+    first_name = forms.TextInput()
+    last_name = forms.TextInput()
+    phone_regex = RegexValidator(regex=r'^\d{3}-\d{3,4}-\d{4}$',
+                                 message="Phone number must be entered in the format: '010-1010-1010'. Up to 11 digits allowed.")
+    phone_number = forms.CharField(validators=[phone_regex])

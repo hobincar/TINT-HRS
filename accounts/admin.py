@@ -6,11 +6,12 @@ from reservations.models import Reservation
 class ReservationInline(admin.TabularInline):
     model = Reservation
     fk_name = 'customer'
-    extra = 3
+    extra = 2
 
 
 class UserAdmin(admin.ModelAdmin):
     model = User
+    filter_horizontal = ('coupons',)
     inlines = (ReservationInline,)
 
 

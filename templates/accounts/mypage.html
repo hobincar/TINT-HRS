@@ -8,10 +8,10 @@
 <div class="three wide column">
     <div class="ui vertical fluid tabular menu">
         <a class="active item" data-tab="first">
-            Reservation
+            My information
         </a>
         <a class="item" data-tab="second">
-            My information
+            Reservation
         </a>
         <a class="item" data-tab="third">
             My coupon
@@ -21,73 +21,394 @@
 
 <div class="twelve wide stretched column main-content">
     <div class="ui bottom attached active tab segment" data-tab="first">
+        <form role="form" class="ui modify-info large form" method="POST" action="{% url 'modify_info' %}">{% csrf_token %}
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="mail icon"></i>
+                        <input id="email" class="ui" type="text" name="email" placeholder="E-mail address" value="{{ user.email }}" readonly/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="old_password" type="password" name="old_password" placeholder="Old Password" required/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="password1" type="password" name="password1" placeholder="New Password"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="password2" type="password" name="password2" placeholder="New Password confirmation"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input class="ui" type="text" name="first_name" placeholder="First name" value="{{ user.first_name }}"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input class="ui" type="text" name="last_name" placeholder="Last Name" value="{{ user.last_name }}"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="mobile icon"></i>
+                        <input id="phone_number" class="ui" type="text" name="phone_number" placeholder="Phone number     e.g. 010-1010-1010" value="{{ user.phone_number }}" />
+                    </div>
+                </div>
+                <div class="ui error message"></div>
+                {% if user_modification_form.errors %}
+                    {{ user_modification_form.non_field_errors }}
+                {% endif %}
+                <button type="submit" class="ui fluid large teal submit button">Save</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="ui bottom attached tab segment" data-tab="second">
         <div class="ui divided items">
             {% for reservation in user.reservations.all %}
-            <div class="ui fluid green card item">
+            <div class="ui padded segment item{{forloop.counter}}">
                 <div class="content">
-                    <div class="header">Reservation Summary</div>
+                    <div class="image">
+                        {% for room in reservation.rooms.all %}
+                        <img class="ui rounded small image" src="{{ MEDIA_ROOT }}{{ room.image.url }}"/>
+                        {% endfor %}
+                    </div>
+                    <div class="ui hidden divider"></div>
                     <div class="description">
                         <div class="ui list">
                             <div id="check-in-item" class="meta item">
                                 <div class="ui fluid">
                                     <i class="calendar icon"></i>
-                                    <span id="check-in"></span> ~ <span id="check-out"></span>
+                                    {{ reservation.check_in }} ~ {{ reservation.check_out }}
                                 </div>
                             </div>
                             <div id="n-adult-child-item" class="meta item">
                                 <div class="ui fluid">
                                     <i class="users icon"></i>
-                                    <span id="n-adult"></span> Adults, <span id="n-child"></span> Childrens
+                                    {{ reservation.n_adult }} Adults, {{ reservation.n_child }} Childrens
                                 </div>
                             </div>
                             <div id="coupon-item" class="meta item">
                                 <div class="ui fluid">
                                     <i class="money icon"></i>
-                                    <span id="coupon"></span>
+                                    {% if reservation.coupon %}
+                                    {{ reservation.coupon.discount }} discount coupon
+                                    {% else %}
+                                    No coupon
+                                    {% endif %}
                                 </div>
                             </div>
                             
                             <div id="room-item" class="meta item">
                                 <div class="ui fluid">
                                     <i class="cubes icon"></i>
-                                    <span id="room"></span>
+                                    {% for room in reservation.rooms.all %}
+                                    {{ room.n_room }} {{ room.get_type_display }},
+                                    {% endfor %}
                                 </div>
                             </div>
                             
                             <div id="breakfast-item" class="meta item">
                                 <div class="ui fluid">
                                     <i class="food icon"></i>
-                                    <span id="n-breakfast"></span>
+                                    {{ reservation.n_breakfast }} breakfast
                                 </div>
                             </div>
                             <div id="n-baby-bed-item" class="meta item">
                                 <div class="ui fluid">
                                     <i class="hotel icon"></i>
-                                    <span id="n-baby-bed"></span>
+                                    {{ reservation.n_baby_bed }} baby beds
                                 </div>
                             </div>
                             <div id="total-cost-item" class="meta item">
-                                <div class="ui big blue fluid label">
+                                <div class="ui fluid">
                                     <i class="dollar icon"></i>
-                                    <span id="total-cost"></span>
+                                    {{ reservation.total_cost }}
                                 </div>
+                            </div>
+                            {% if reservation.addendum %}
+                            <div class="meta item">
+                                <i class="comment outline icon"></i>
+                                {{ reservation.addendum }}
+                            </div>
+                            {% endif %}
+                            <div class="ui buttons right floated">
+                                <button class="ui blue button" onclick="$('.modify.modal.item{{ forloop.counter }}').modal('show')">Modify</button>
+                                <div class="or"></div>
+                                <button class="ui red button" onclick="$('.cancel-reservation.modal.item{{ forloop.counter }}').modal('show')">Cancel</button>
                             </div>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Modify Modal -->
+                <div class="ui modify modal item{{forloop.counter}}">
+                    <div class="header">Modify Your Reservation</div>
+                    <div class="content">
+                        <form id="modify_form{{forloop.counter}}" role="form" class="ui modify form segment" method="POST" action="{% url 'modify' %}">{% csrf_token %}
+                            <input type="hidden" name="reservation_id" value="{{ reservation.id }}"/>
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>When will you check in?</label>
+                                    <div class="ui labeled input">
+                                        <div class="ui green label">
+                                            <i class="calendar icon"></i>
+                                            Check In
+                                        </div>
+                                        <input type="date" name="check_in" value="{{ reservation.check_in|date:'Y-m-d' }}">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>When will you check out?</label>
+                                    <div class="ui labeled input">
+                                        <div class="ui green label">
+                                            <i class="calendar icon"></i>
+                                            Check Out
+                                        </div>
+                                        <input type="date" name="check_out" value="{{ reservation.check_out|date:'Y-m-d' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="three fields">
+                                
+                                <div class="five wide field">
+                                    <label>How many Adults? (18~)</label>
+                                    <div class="ui floating selection dropdown labeled icon fluid button">
+                                        <input type="hidden" name="n_adult" value="{{ reservation.n_adult }}"/>
+                                        <i class="users icon"></i>
+                                        <div class="default text">{{ reservation.n_adult }} Adults</div>
+                                        <div class="menu">
+                                            <div class="item" data-value="1">1 Adult</div>
+                                            <div class="item" data-value="2">2 Adults</div>
+                                            <div class="item" data-value="3">3 Adults</div>
+                                            <div class="item" data-value="4">4 Adults</div>
+                                            <div class="item" data-value="5">5 Adults</div>
+                                            <div class="item" data-value="6">6 Adults</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide field">
+                                    <label>How many Children?  (~17)</label>
+                                    <div class="ui floating selection dropdown labeled icon fluid button">
+                                        <input type="hidden" name="n_child" value="{{ reservation.n_child }}"/>
+                                        <i class="child icon"></i>
+                                        <div class="default text">{{ reservation.n_child }} Children</div>
+                                        <div class="menu">
+                                            <div class="item" data-value="0">0 Children</div>
+                                            <div class="item" data-value="1">1 Child</div>
+                                            <div class="item" data-value="2">2 Children</div>
+                                            <div class="item" data-value="3">3 Children</div>
+                                            <div class="item" data-value="4">4 Children</div>
+                                            <div class="item" data-value="5">5 Children</div>
+                                            <div class="item" data-value="6">6 Children</div>
+                                            <div class="item" data-value="7">7 Children</div>
+                                            <div class="item" data-value="8">8 Children</div>
+                                            <div class="item" data-value="9">9 Children</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="six wide field">
+                                    <label>Will you use a coupon? (optional)</label>
+                                    <div class="ui floating selection dropdown labeled icon fluid button">
+                                        {% if reservation.coupon %}
+                                            <input type="hidden" name="coupon_id" value="{{ reservation.coupon.id }}"/>
+                                            <i class="money icon"></i>
+                                            <span class="text">{{ coupon.discount }} Discount Coupon</span>
+                                        {% else %}
+                                            <input type="hidden" name="coupon"/>
+                                            <i class="money icon"></i>
+                                            <span class="text">None</span>
+                                        {% endif %}
+                                        <div class="menu">
+                                            <div class="item active selected" data-value="">None</div>
+                                            {% for coupon in user.coupons.all %}
+                                                <div class="item" data-value="{{coupon.id}}">{{ coupon.discount }} Discount Coupon</div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="two fields">
+                                <div class="eight wide field">
+                                    <label>How many breakfast do you want? (each $16.50)</label>
+                                    <div class="ui labeled fluid input">
+                                        <div class="ui label">
+                                            <i class="food icon"></i>
+                                            Breakfast
+                                        </div>
+                                        <input type="number" name="n_breakfast" value="{{ reservation.n_breakfast }}"/>
+                                    </div>
+                                </div>
+                                <div class="eight wide field">
+                                    <label>Do you need a Baby Bed? (each $10.00)</label>
+                                    <div class="ui floating selection dropdown labeled icon fluid button">
+                                        <input type="hidden" name="n_baby_bed" value="{{ reservation.n_baby_bed }}"/>
+                                        <i class="cubes icon"></i>
+                                        <span class="text">{{ reservation.n_baby_bed }}</span>
+                                        <div class="menu">
+                                            <div class="item" data-value="0">0</div>
+                                            <div class="item" data-value="1">1</div>
+                                            <div class="item" data-value="2">2</div>
+                                            <div class="item" data-value="3">3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Additional Text</label>
+                                <textarea name="addendum" rows="2" placeholder="If you want, we will help you.">{{ reservation.addendum }}</textarea>
+                            </div>
+                            <div class="ui buttons right aligned">
+                                <div class="ui round button blue" onclick="$('.pay.modal.item{{forloop.counter}}').modal('show')">Save</div>
+                                <div class="ui round button red modal-close-btn">Cancel</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Pay Modal -->
+                <div class="ui pay modal item{{forloop.counter}}">
+                    <div class="header">Pay Your Reservation</div>
+                    <div class="content">
+                        <div class="ui pay form container">
+                            <div class="field">
+                                <form id="pay_form{{ forloop.counter }}">
+                                    <h4 class="ui dividing header">Billing Information</h4>
+                                    <div class="disabled field">
+                                        <label>Card Type</label>
+                                        <div class="ui selection dropdown">
+                                            <input type="hidden" name="card_type" value="{{ reservation.card_type }}"/>
+                                            <div class="default text">{{ reservation.card_type }}</div>
+                                            <i class="dropdown icon"></i>
+                                            <div class="menu">
+                                                <div class="item" data-value="VS">
+                                                    <i class="visa icon"></i>
+                                                    Visa
+                                                </div>
+                                                <div class="item" data-value="AE">
+                                                    <i class="amex icon"></i>
+                                                    American Express
+                                                </div>
+                                                <div class="item" data-value="DC">
+                                                    <i class="discover icon"></i>
+                                                    Discover
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="fields">
+                                        <div class="seven wide disabled field">
+                                            <label>Card Number</label>
+                                            <input type="number" name="card_number" maxlength="16" placeholder="Card #" value="{{ reservation.card_number }}" readonly/>
+                                        </div>
+                                        <div class="three wide disabled field">
+                                            <label>CVC</label>
+                                            <input type="number" name="card_cvc" maxlength="3" placeholder="CVC" value="{{ reservation.card_cvc }}" readonly/>
+                                        </div>
+                                        <div class="six wide disabled field">
+                                            <label>Expiration</label>
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <select class="ui fluid search dropdown" name="card_expire_month" value="{{ reservation.card_expire_month }}" disabled>
+                                                        <option>Month</option>
+                                                        <option value="1" {% if reservation.card_expire_month == '1' %} selected {% endif %}>January</option>
+                                                        <option value="2" {% if reservation.card_expire_month == '2' %} selected {% endif %}>February</option>
+                                                        <option value="3" {% if reservation.card_expire_month == '3' %} selected {% endif %}>March</option>
+                                                        <option value="4" {% if reservation.card_expire_month == '4' %} selected {% endif %}>April</option>
+                                                        <option value="5" {% if reservation.card_expire_month == '5' %} selected {% endif %}>May</option>
+                                                        <option value="6" {% if reservation.card_expire_month == '6' %} selected {% endif %}>June</option>
+                                                        <option value="7" {% if reservation.card_expire_month == '7' %} selected {% endif %}>July</option>
+                                                        <option value="8" {% if reservation.card_expire_month == '8' %} selected {% endif %}>August</option>
+                                                        <option value="9" {% if reservation.card_expire_month == '9' %} selected {% endif %}>September</option>
+                                                        <option value="10" {% if reservation.card_expire_month == '10' %} selected {% endif %}>October</option>
+                                                        <option value="11" {% if reservation.card_expire_month == '11' %} selected {% endif %}>November</option>
+                                                        <option value="12" {% if reservation.card_expire_month == '12' %} selected {% endif %}>December</option>
+                                                    </select>
+                                                </div>
+                                                <div class="field required">
+                                                    <input type="number" name="card_expire_year" maxlength="4" placeholder="Year" value="{{ reservation.card_expire_year }}" readonly/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <input type="submit" value="Pay" class="ui positive fluid button" id="payment_button"
+                                onclick="$('#modify_form{{forloop.counter}}').submit();
+                                         $('.modify.modal.item{{forloop.counter}}').modal('show')"/>
+                            <div class="ui error message"></div>
+                            <div class="ui hidden divider"></div>
+                            <div class="ui button blue" onclick="$('.modify.modal.item{{forloop.counter}}').modal('show')">Back to Modify</div>
+                            <div class="ui button red" onclick="$('.pay.modal.item{{forloop.counter}}').modal('hide')" tabindex="1">Cancel</div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- Cancel Modal -->
+                <div class="ui small cancel-reservation modal item{{ forloop.counter }}">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Are you sure? The reservation fee will NOT BE REFUNDED.
+                    </div>
+                    <div class="actions">
+                        <form method="POST" action="{% url 'cancel_reservation' %}">{% csrf_token %}
+                            <input type="hidden" name="reservation_id" value="{{ reservation.id }}"/>
+                            <input type="submit" class="ui approve button" value="Yes"/>
+                            <div class="ui cancel button" onclick="$('.cancel-reservation.modal.item{{ forloop.counter }}').modal('hide')">No</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="ui hidden divider"></div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="ui bottom attached tab segment" data-tab="third">
+        <div class="ui cards">
+            {% for coupon in user.coupons.all %}
+            <div class="card">
+                <div class="image">
+                    <img src="{{ MEDIA_ROOT }}{{ coupon.image.url }}"/>
+                </div>
+                <div class="content">
+                    <div class="header">{{ coupon.discount }}% Discount Coupon</div>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
-    
-    <div class="ui bottom attached tab segment" data-tab="second">
-        My information
+</div>
+
+<!-- Progress Modal -->
+<div class="ui small modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Payment is in progress automatically.
     </div>
-    
-    <div class="ui bottom attached tab segment" data-tab="third">
-        My coupon
+    <div class="content">
+        <div class="description">
+            <p>If this window persists, please try again.</p>
+            <p>Thank you for using our hotel.</p>
+            <div class="ui indicating progress">
+                <div class="bar"></div>
+            </div>
+        </div>
     </div>
 </div>
+
 {% endblock %}
 
 {% block script %}
