@@ -1,4 +1,6 @@
 $(function() {
+    $('#chat-btn').on('click', () => $('.ui.chat.modal').modal('show'));
+
     $('#message').on('keyup', function(event) {
         if (event.keyCode == 13) {
             let customer_message = $('#message').val();
