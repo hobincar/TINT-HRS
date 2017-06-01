@@ -105,10 +105,64 @@ $(document)
     $('.ui.dropdown').dropdown();
     $('.ui.toggle.checkbox').checkbox('set checked');
 
-    $('#pay-submit-btn').on('click', progressModal);
+    $('.ui.reservation.form')
+        .form({
+          fields: {
+            card_type: {
+              identifier: 'card_type',
+              rules: [
+                {
+                  type: 'empty',
+                  prompt: 'Please select card type'
+                }
+              ]
+            },
+            card_number: {
+              identifier: 'card_number',
+              rules: [
+                {
+                  type : 'regExp',
+                  value: /\d{16}/
+                }
+              ]
+            },
+            card_cvc: {
+              identifier: 'card_cvc',
+              rules: [
+                {
+                  type: 'regExp',
+                  value: /\d{3}/
+                }
+              ]
+            },
+            card_expire_month: {
+              identifier: 'card_expire_month',
+              rules: [
+                {
+                  type: 'empty',
+                  prompt: 'Please select card expiration month'
+                }
+              ]
+            },
+            card_expire_year: {
+              identifier: 'card_expire_year',
+              rules: [
+                {
+                  type: 'regExp',
+                  value: /\d{4}/
+                }
+              ]
+            },
+          },
+          onSuccess: function(event) {
+            event.preventDefault();
+            progressPayModal();
+            setTimeout(() => $(this).unbind(event).submit(), 2000);
+          },
+        });
 });
 
-function progressModal() {
+function progressPayModal() {
   // show modal
   $('.ui.pay.modal')
     .modal('show')

@@ -23,51 +23,55 @@ def reserve(request):
             # CUSTOMER
             reservation.customer = User.objects.get(id=request.user.id)
 
-            # ROOM
-            n_room_list = request.POST.getlist('n_room')
-            room_id_list = request.POST.getlist('room_id')
-            reservation.total_cost = 0
             reservation.save()
-            room_cost = 0
-            for n_room, room_id in zip(n_room_list, room_id_list):
-                if n_room and int(n_room) > 0:
-                    room = Room.objects.get(id=room_id)
-                    r = RoomReservationInfo.objects.create(
-                        reservation=reservation,
-                        room=room,
-                        n_room=n_room
-                    )
-                    r.save()
+            try:
+                # ROOM
+                n_room_list = request.POST.getlist('n_room')
+                room_id_list = request.POST.getlist('room_id')
+                reservation.total_cost = 0
+                room_cost = 0
+                for n_room, room_id in zip(n_room_list, room_id_list):
+                    if n_room and int(n_room) > 0:
+                        room = Room.objects.get(id=room_id)
+                        r = RoomReservationInfo.objects.create(
+                            reservation=reservation,
+                            room=room,
+                            n_room=n_room
+                        )
+                        r.save()
 
-                    room_cost += int(n_room) * float(room.cost_per_night)
+                        room_cost += int(n_room) * float(room.cost_per_night)
 
-            total_cost = room_cost + 16.50*float(form.cleaned_data['n_breakfast']) + 10.00*float(form.cleaned_data['n_baby_bed'])
+                total_cost = room_cost + 16.50*float(form.cleaned_data['n_breakfast']) + 10.00*float(form.cleaned_data['n_baby_bed'])
 
-            # COUPON
-            coupon_id = form.data['coupon']
-            if coupon_id:
-                coupon = Coupon.objects.get(id=coupon_id)
-                reservation.coupon = coupon
-                reservation.customer.coupons.remove(coupon)
-                total_cost = total_cost / 100 * (100-coupon.discount)
-            reservation.total_cost = total_cost
+                # COUPON
+                coupon_id = form.data['coupon']
+                if coupon_id:
+                    coupon = Coupon.objects.get(id=coupon_id)
+                    reservation.coupon = coupon
+                    reservation.customer.coupons.remove(coupon)
+                    total_cost = total_cost / 100 * (100-coupon.discount)
+                reservation.total_cost = total_cost
 
-            # SEND_RECEIPT
-            if 'b_send_receipt' in form.data and form.data['b_send_receipt'] == "on":
-                send_receipt = form.data['send_receipt']
-                reservation.send_receipt = ''
-                if "phone" in send_receipt.lower():
-                    reservation.send_receipt += 'C,'
-                if "mail" in send_receipt.lower():
-                    reservation.send_receipt += 'E,'
+                # SEND_RECEIPT
+                if 'b_send_receipt' in form.data and form.data['b_send_receipt'] == "on":
+                    send_receipt = form.data['send_receipt']
+                    reservation.send_receipt = ''
+                    if "phone" in send_receipt.lower():
+                        reservation.send_receipt += 'C,'
+                    if "mail" in send_receipt.lower():
+                        reservation.send_receipt += 'E,'
 
-            # RESERVED/MODIFIED DATE
-            reservation.reserved_date = timezone.now()
-            reservation.modified_date = timezone.now()
+                # RESERVED/MODIFIED DATE
+                reservation.reserved_date = timezone.now()
+                reservation.modified_date = timezone.now()
 
-            reservation.save()
+                reservation.save()
 
-            return redirect(reverse('main'))
+                return redirect(reverse('mypage'))
+            except:
+                reservation.delete()
+                redirect(reverse('main'))
         else:
             messages.error(request, "reservation form is not valid")
     else:

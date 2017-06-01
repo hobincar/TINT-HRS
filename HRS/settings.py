@@ -76,7 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'HRS.context_processors.media_root',
+                'HRS.context_processors.media_url',
             ],
         },
     },
@@ -135,10 +135,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "HRS", "static"),
 ]
 
-MEDIA_ROOT = '/static/image_upload/'
+MEDIA_ROOT = 'HRS/static/image_upload/'
+MEDIA_URL = '/static/image_upload/'
 
 LOGIN_REDIRECT_URL = '/'
 

@@ -81,7 +81,7 @@
                 <div class="content">
                     <div class="image">
                         {% for room in reservation.rooms.all %}
-                        <img class="ui rounded small image" src="{{ MEDIA_ROOT }}{{ room.image.url }}"/>
+                        <img class="ui rounded small image" src="{{ room.image.url }}"/>
                         {% endfor %}
                     </div>
                     <div class="ui hidden divider"></div>
@@ -381,7 +381,7 @@
             {% for coupon in user.coupons.all %}
             <div class="card">
                 <div class="image">
-                    <img src="{{ MEDIA_ROOT }}{{ coupon.image.url }}"/>
+                    <img src="{{ coupon.image.url }}"/>
                 </div>
                 <div class="content">
                     <div class="header">{{ coupon.discount }}% Discount Coupon</div>

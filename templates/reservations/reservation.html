@@ -96,7 +96,7 @@
     <div class="ui divider"></div>
 </div>
 
-<form role="form" class="ui register large form" method="POST" action="{% url 'reserve' %}">{% csrf_token %}
+<form role="form" class="ui reservation large form" method="POST" action="{% url 'reserve' %}">{% csrf_token %}
     <!--Step1-->
     <div id="step1">
         <div class="ui step1 segment">
@@ -162,7 +162,7 @@
                 <div class="field">
                     <label>Will you use a coupon? (optional)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
-                        <input type="hidden" name="coupon">
+                        <input type="hidden" name="coupon" value="">
                         <i class="money icon"></i>
                         <span class="text">None</span>
                         <div class="menu">
@@ -184,7 +184,7 @@
             {% for room in rooms %}
                 <div class="item room-item">
                     <div class="image">
-                        <img class="ui rounded image" src="{{ MEDIA_ROOT }}{{ room.image.url }}">
+                        <img class="ui rounded image" src="{{ room.image.url }}">
                     </div>
                     <div class="content">
                         <h5 class="header room-type">{{ room.get_type_display }}</h5>
@@ -237,7 +237,7 @@
                             <div class="ui right floated">
                                 <label># Room</label>
                                 <div class="ui floating selection dropdown labeled icon fluid button">
-                                    <input type="hidden" name="n_room"/>
+                                    <input type="hidden" name="n_room" value="0"/>
                                     <i class="cubes icon"></i>
                                     <div class="default text">0</div>
                                     <div class="menu">
@@ -275,7 +275,7 @@
                 <div class="eight wide field">
                     <label>Do you need a Baby Bed? (each $10.00)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
-                        <input type="hidden" name="n_baby_bed"/>
+                        <input type="hidden" name="n_baby_bed" value="0"/>
                         <i class="cubes icon"></i>
                         <span class="text">0</span>
                         <div class="menu">
@@ -323,17 +323,17 @@
             <div class="fields">
                 <div class="seven wide field required">
                     <label>Card Number</label>
-                    <input type="number" name="card_number" maxlength="16" placeholder="Card #">
+                    <input type="number" name="card_number" maxlength="16" placeholder="Card #" required>
                 </div>
                 <div class="three wide field required">
                     <label>CVC</label>
-                    <input type="number" name="card_cvc" maxlength="3" placeholder="CVC">
+                    <input type="number" name="card_cvc" maxlength="3" placeholder="CVC" required/>
                 </div>
                 <div class="six wide field required">
                     <label>Expiration</label>
                     <div class="two fields">
                         <div class="field">
-                            <select class="ui fluid search dropdown" name="card_expire_month">
+                            <select class="ui fluid search dropdown" name="card_expire_month" required>
                                 <option value="">Month</option>
                                 <option value="1">January</option>
                                 <option value="2">February</option>
@@ -350,7 +350,7 @@
                             </select>
                         </div>
                         <div class="field required">
-                            <input type="number" name="card_expire_year" maxlength="4" placeholder="Year">
+                            <input type="number" name="card_expire_year" maxlength="4" placeholder="Year" required/>
                         </div>
                     </div>
                 </div>
