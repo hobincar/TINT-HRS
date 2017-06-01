@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^reservations/', include('reservations.urls')),
+    url(r'^chats/', include('chats.urls')),
     url(r'^$', main, name='main'),
 ]
