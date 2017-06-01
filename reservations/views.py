@@ -22,13 +22,13 @@ def reserve(request):
 
             # CUSTOMER
             reservation.customer = User.objects.get(id=request.user.id)
-
+            
+            reservation.total_cost = 0
             reservation.save()
             try:
                 # ROOM
                 n_room_list = request.POST.getlist('n_room')
                 room_id_list = request.POST.getlist('room_id')
-                reservation.total_cost = 0
                 room_cost = 0
                 for n_room, room_id in zip(n_room_list, room_id_list):
                     if n_room and int(n_room) > 0:
@@ -75,10 +75,14 @@ def reserve(request):
         else:
             messages.error(request, "reservation form is not valid")
     else:
-        form = ReservationForm()
+        if request.GET.items():
+            form = ReservationForm(request.GET)
+        else:
+            form = ReservationForm()
+        coupon_id = request.GET.get('coupon', '')
 
     rooms = Room.objects.order_by('cost_per_night')
-    args = {'form': form, 'rooms': rooms}
+    args = {'form': form, 'rooms': rooms, 'coupon_id': coupon_id}
     args.update(csrf(request))
 
     return render(request, 'reservations/reservation.html', args)

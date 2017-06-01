@@ -8,7 +8,7 @@
 <div class="ui vertical segment">
     <div class="ui middle aligned stackable equal height grid container">
         <div class="sixteen wide column">
-            <form class="wide ui reservation form segment column">
+            <form class="wide ui reservation form segment column" method="GET" action="{% url 'reserve' %}">
                 <h2 class="ui header">
                     <i class="lightning icon"></i>
                     <div class="content">
@@ -77,7 +77,7 @@
                     <div class="field">
                         <label>Will you use a coupon? (optional)</label>
                         <div class="ui floating selection dropdown labeled icon fluid button">
-                            <input type="hidden" name="coupon" value="">
+                            <input type="hidden" name="coupon"/>
                             <i class="money icon"></i>
                             <span class="text">None</span>
                             <div class="menu">
@@ -90,9 +90,8 @@
                     </div>
                 </div>
 
-                <div class="ui right blue fluid button disabled" id="quick_reservation">
-                    Please fill in the required fileds
-                </div>
+                <input type="submit" class="ui right blue fluid button disabled" id="quick_reservation"
+                       value="Please fill in the required fileds"/>
             </form>
         </div>
     </div>
@@ -191,10 +190,7 @@
 {% block script %}
 <script>
     $('.ui.dropdown').dropdown();
-
-    $('#quick_reservation').on('click', function () {
-        alert('TODO: MOVE TO RESERVATION PAGE');
-    })
+    
     $('input[name=check_in], input[name=check_out], input[name=n_adult], input[name=n_child], input[name=coupon]').change(function () {
         console.log($(this).val());
         let beEnable = true;
@@ -205,7 +201,7 @@
         });
         let isValid = isValidPeriod();
         if (beEnable && isValid) {
-            $('#quick_reservation').text('Next');
+            $('#quick_reservation').val('Next');
             $('.input.error.nag').remove();
             $('#quick_reservation').removeClass('disabled');
         } else if (beEnable && !isValid) {

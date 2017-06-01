@@ -232,6 +232,7 @@ function checkInput() {
                 })
             }
         });
+        $('input[name=check_in]').change();
     } else if (step == 2) {
         $('#next-btn span').text('Please choose room');
         $('input[name=n_room]').change(function () {
@@ -249,6 +250,7 @@ function checkInput() {
                 }
             })
         });
+        $('input[name=n_room]').change();
     } else if (step == 3) {
         $('#next-btn span').text("I don't need any options");
         $('#next-btn').removeClass('disabled');
@@ -265,6 +267,7 @@ function checkInput() {
                 $('#next-btn span').text("I don't need any options");
             }
         });
+        $('input[name=n_breakfast]').change();
     }
 }
 

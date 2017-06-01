@@ -108,7 +108,11 @@
                             <i class="calendar icon"></i>
                             Check In
                         </div>
-                        <input type="date" name="check_in" value="{{ reservation.check_in|date:'Y-m-d' }}">
+                        {% if form.check_in.value %}
+                            <input type="date" name="check_in" value="{{ form.check_in.value }}"/>
+                        {% else %}
+                            <input type="date" name="check_in" value="{{ reservation.check_in|date:'Y-m-d' }}"/>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="field required">
@@ -118,7 +122,11 @@
                             <i class="calendar icon"></i>
                             Check Out
                         </div>
-                        <input type="date" name="check_out" value="{{ reservation.check_out|date:'Y-m-d' }}">
+                        {% if form.check_in.value %}
+                            <input type="date" name="check_out" value="{{ form.check_out.value }}">
+                        {% else %}
+                            <input type="date" name="check_out" value="{{ reservation.check_out|date:'Y-m-d' }}">
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -126,11 +134,15 @@
                 <div class="field required">
                     <label>How many Adults? (18~)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
-                        <input type="hidden" name="n_adult" value="1"/>
+                        {% if form.n_adult.value %}
+                            <input type="hidden" name="n_adult" value="{{ form.n_adult.value }}"/>
+                        {% else %}
+                            <input type="hidden" name="n_adult"/>
+                        {% endif %}
                         <i class="users icon"></i>
                         <div class="default text"> Choose # of Adults </div>
                         <div class="menu">
-                            <div class="item active selected" data-value="1">1 Adult</div>
+                            <div class="item" data-value="1">1 Adult</div>
                             <div class="item" data-value="2">2 Adults</div>
                             <div class="item" data-value="3">3 Adults</div>
                             <div class="item" data-value="4">4 Adults</div>
@@ -142,11 +154,15 @@
                 <div class="field required">
                     <label>How many Children?  (~17)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
-                        <input type="hidden" name="n_child" value="0"/>
+                        {% if form.n_child.value %}
+                            <input type="hidden" name="n_child" value="{{ form.n_child.value }}"/>
+                        {% else %}
+                            <input type="hidden" name="n_child"/>
+                        {% endif %}
                         <i class="child icon"></i>
                         <div class="default text"> Choose # of Children </div>
                         <div class="menu">
-                            <div class="item active selected" data-value="0">0 Children</div>
+                            <div class="item" data-value="0">0 Children</div>
                             <div class="item" data-value="1">1 Child</div>
                             <div class="item" data-value="2">2 Children</div>
                             <div class="item" data-value="3">3 Children</div>
@@ -162,13 +178,13 @@
                 <div class="field">
                     <label>Will you use a coupon? (optional)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
-                        <input type="hidden" name="coupon" value="">
+                        <input type="hidden" name="coupon" value="{{ coupon_id }}"/>
                         <i class="money icon"></i>
-                        <span class="text">None</span>
+                        <div class="default text"> None </div>
                         <div class="menu">
                             <div class="item active selected" data-value="">None</div>
                             {% for coupon in user.coupons.all %}
-                                <div class="item" data-value="{{coupon.id}}">{{ coupon.discount }} Discount Coupon</div>
+                                <div class="item" data-value="{{coupon.id}}">{{ coupon.discount }}% Discount Coupon</div>
                             {% endfor %}
                         </div>
                     </div>
@@ -419,4 +435,13 @@
 
 {% block script %}
 <script src="/static/js/reservation.js"></script>
+{% if form.check_in.value %}
+    <script>
+        $(document)
+            .ready(function() {
+                $('#next-btn span').text('Next');
+                $('#next-btn').click();
+            });
+{% endif %}
+</script>
 {% endblock %}
