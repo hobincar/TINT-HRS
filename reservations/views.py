@@ -1,4 +1,3 @@
-import re
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
@@ -6,11 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from django.utils import timezone
 
-from .models import Reservation, RoomReservationInfo, Coupon
+from .models import Reservation, RoomReservationInfo
+from memberships.models import Coupon
+from accounts.models import User
+from rooms.models import Room
 from .forms import ReservationForm, ReservationModificationForm, ReservationCancelationForm
 from accounts.forms import UserRegistrationForm
-from rooms.models import Room
-from accounts.models import User
 
 
 @login_required

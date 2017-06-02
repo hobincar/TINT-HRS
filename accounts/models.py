@@ -32,7 +32,7 @@ class User(AbstractUser):
     # number of custom attribute to our user class
 
     # in later units we'll be adding things like payment details!
-    coupons = models.ManyToManyField('reservations.Coupon', blank=True)
+    coupons = models.ManyToManyField('memberships.Coupon', blank=True)
 
     phone_regex = RegexValidator(regex=r'^\d{3}-\d{3,4}-\d{4}$',
                                  message="Phone number must be entered in the format: '010-1010-1010'. Up to 11 digits allowed.")

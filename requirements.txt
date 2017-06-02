@@ -8,3 +8,5 @@ pytz==2017.2
 six==1.10.0
 whitenoise==3.3.0
 psycopg2==2.7.1
+zope.interface==4.4.1
+DateTime==4.2

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'reservations',
     'rooms',
     'chats',
+    'memberships',
     'multiselectfield',
 ]
 
@@ -78,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'HRS.context_processors.media_url',
+                'HRS.context_processors.coupon_blocked_period',
             ],
         },
     },

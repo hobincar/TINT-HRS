@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Reservation, RoomReservationInfo, Coupon
+from .models import Reservation, RoomReservationInfo
 
 
 class RoomReservationInfoInline(admin.TabularInline):
@@ -13,4 +13,3 @@ class ReservationAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Reservation, ReservationAdmin)
-admin.site.register(Coupon)

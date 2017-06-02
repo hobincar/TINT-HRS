@@ -21,7 +21,7 @@ class Reservation(models.Model):
     n_adult = models.PositiveSmallIntegerField()
     n_child = models.PositiveSmallIntegerField()
     coupon = models.ForeignKey(
-        'reservations.Coupon',
+        'memberships.Coupon',
         blank=True, null=True)
     n_breakfast = models.PositiveSmallIntegerField()
     n_baby_bed = models.PositiveSmallIntegerField()
@@ -66,12 +66,3 @@ class RoomReservationInfo(models.Model):
     reservation = models.ForeignKey('Reservation', on_delete=models.CASCADE)
     room = models.ForeignKey('rooms.Room', on_delete=models.CASCADE)
     n_room = models.PositiveSmallIntegerField()
-
-
-class Coupon(models.Model):
-    image = models.ImageField()
-    discount = models.PositiveSmallIntegerField()
-
-    def __str__(self):
-        return "%d%% Discount" % self.discount
-
