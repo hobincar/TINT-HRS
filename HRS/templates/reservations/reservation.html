@@ -175,14 +175,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="field">
+                <div class="field {% if COUPON_BLOCKED_PERIOD %} disabled {% endif %}">
                     <label>Will you use a coupon? (optional)</label>
                     <div class="ui floating selection dropdown labeled icon fluid button">
                         <input type="hidden" name="coupon" value="{{ coupon_id }}"/>
                         <i class="money icon"></i>
                         <div class="default text"> None </div>
                         <div class="menu">
-                            <div class="item active selected" data-value="">None</div>
+                            <div class="item active selected" data-value="">
+                                {% if COUPON_BLOCKED_PERIOD %}
+                                    <span class="error">Cannot use coupon at this time</span>
+                                {% else %}
+                                    None
+                                {% endif %}
+                            </div>
                             {% for coupon in user.coupons.all %}
                                 <div class="item" data-value="{{coupon.id}}">{{ coupon.discount }}% Discount Coupon</div>
                             {% endfor %}

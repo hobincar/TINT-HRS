@@ -109,33 +109,17 @@
             <i class="hotel icon"></i>
             Room Information
         </h1>
+        {% for room in rooms %}
         <div class="row">
             <div class="eight wide column">
-                <h3 class="ui header">Deluxe room</h3>
-                <p>Your dream escape awaits at Singapore’s most iconic luxury hotel. The Deluxe Room welcomes you with plush, gold-and-earth toned furnishings and abundant natural light from floor-to-ceiling windows.</p>
+                <h3 class="ui header">{{ room.get_type_display }}</h3>
+                <p>{{ room.description }}</p>
             </div>
             <div class="six wide right floated column">
-                <img src="/static/image/deluxe_room.jpg" class="ui large bordered rounded image">
+                <img src="{{ room.image.url }}" class="ui large bordered rounded image">
             </div>
         </div>
-        <div class="row">
-            <div class="eight wide column">
-                <h3 class="ui header">Premier room</h3>
-                <p>Relax in the contemporary comforts of your Premier Room, a bright and airy haven to uplift your body and spirit. Luxuriate in the deep-soaking bathtub, and relax with an array of convenient amenities including movies on demand and 24-hour room service.</p>
-            </div>
-            <div class="six wide right floated column">
-                <img src="/static/image/premier_room.jpg" class="ui large bordered rounded image">
-            </div>
-        </div>
-        <div class="row">
-            <div class="eight wide column">
-                <h3 class="ui header">Family room</h3>
-                <p>Carefully designed with families in mind, this sanctuary is the perfect combination of convenience and comfort, offering all your living needs in one space. Located on the 2nd and 3rd floors, the Family Room has a furnished balcony spacious enough for the whole family to enjoy open-air dining amidst lush garden views. Unwind on the plush sofa for movie night with the kids, then indulge in a relaxing bathtub soak before retreating under the covers to recharge — there’s plenty to explore in and around Marina Bay Sands.</p>
-            </div>
-            <div class="six wide right floated column">
-                <img src="/static/image/family_room.jpg" class="ui large bordered rounded image">
-            </div>
-        </div>
+        {% endfor %}
         <div class="row">
             <div class="center aligned column">
                 <a class="ui huge button" href="{% url 'reserve' %}">Reservation</a>
