@@ -141,7 +141,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "HRS", "static"),
 ]
 
-MEDIA_ROOT = 'HRS/'
+MEDIA_ROOT = 'HRS/static/image_upload/'
 MEDIA_URL = '/static/image_upload/'
 
 LOGIN_REDIRECT_URL = '/'
