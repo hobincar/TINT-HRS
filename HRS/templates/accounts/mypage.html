@@ -218,13 +218,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="six wide field">
+                                <div class="six wide field disabled">
                                     <label>Will you use a coupon? (optional)</label>
                                     <div class="ui floating selection dropdown labeled icon fluid button">
                                         {% if reservation.coupon %}
                                             <input type="hidden" name="coupon_id" value="{{ reservation.coupon.id }}"/>
                                             <i class="money icon"></i>
-                                            <span class="text">{{ coupon.discount }} Discount Coupon</span>
+                                            <span class="text">{{ reservation.coupon.discount }}% Discount Coupon</span>
                                         {% else %}
                                             <input type="hidden" name="coupon"/>
                                             <i class="money icon"></i>
@@ -282,10 +282,10 @@
                     <div class="header">Pay Your Reservation</div>
                     <div class="content">
                         <div class="ui pay form container">
-                            <div class="field">
-                                <form id="pay_form{{ forloop.counter }}">
-                                    <h4 class="ui dividing header">Billing Information</h4>
-                                    <div class="disabled field">
+                            <form id="pay_form{{ forloop.counter }}">
+                                <h4 class="ui dividing header">Billing Information</h4>
+                                <div class="fields">
+                                    <div class="disabled field sixteen wide column">
                                         <label>Card Type</label>
                                         <div class="ui selection dropdown">
                                             <input type="hidden" name="card_type" value="{{ reservation.card_type }}"/>
@@ -307,43 +307,43 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="fields">
-                                        <div class="seven wide disabled field">
-                                            <label>Card Number</label>
-                                            <input type="number" name="card_number" maxlength="16" placeholder="Card #" value="{{ reservation.card_number }}" readonly/>
-                                        </div>
-                                        <div class="three wide disabled field">
-                                            <label>CVC</label>
-                                            <input type="number" name="card_cvc" maxlength="3" placeholder="CVC" value="{{ reservation.card_cvc }}" readonly/>
-                                        </div>
-                                        <div class="six wide disabled field">
-                                            <label>Expiration</label>
-                                            <div class="two fields">
-                                                <div class="field">
-                                                    <select class="ui fluid search dropdown" name="card_expire_month" value="{{ reservation.card_expire_month }}" disabled>
-                                                        <option>Month</option>
-                                                        <option value="1" {% if reservation.card_expire_month == '1' %} selected {% endif %}>January</option>
-                                                        <option value="2" {% if reservation.card_expire_month == '2' %} selected {% endif %}>February</option>
-                                                        <option value="3" {% if reservation.card_expire_month == '3' %} selected {% endif %}>March</option>
-                                                        <option value="4" {% if reservation.card_expire_month == '4' %} selected {% endif %}>April</option>
-                                                        <option value="5" {% if reservation.card_expire_month == '5' %} selected {% endif %}>May</option>
-                                                        <option value="6" {% if reservation.card_expire_month == '6' %} selected {% endif %}>June</option>
-                                                        <option value="7" {% if reservation.card_expire_month == '7' %} selected {% endif %}>July</option>
-                                                        <option value="8" {% if reservation.card_expire_month == '8' %} selected {% endif %}>August</option>
-                                                        <option value="9" {% if reservation.card_expire_month == '9' %} selected {% endif %}>September</option>
-                                                        <option value="10" {% if reservation.card_expire_month == '10' %} selected {% endif %}>October</option>
-                                                        <option value="11" {% if reservation.card_expire_month == '11' %} selected {% endif %}>November</option>
-                                                        <option value="12" {% if reservation.card_expire_month == '12' %} selected {% endif %}>December</option>
-                                                    </select>
-                                                </div>
-                                                <div class="field required">
-                                                    <input type="number" name="card_expire_year" maxlength="4" placeholder="Year" value="{{ reservation.card_expire_year }}" readonly/>
-                                                </div>
+                                </div>
+                                <div class="fields">
+                                    <div class="seven wide disabled field">
+                                        <label>Card Number</label>
+                                        <input type="number" name="card_number" maxlength="16" placeholder="Card #" value="{{ reservation.card_number }}"/>
+                                    </div>
+                                    <div class="three wide disabled field">
+                                        <label>CVC</label>
+                                        <input type="number" name="card_cvc" maxlength="3" placeholder="CVC" value="{{ reservation.card_cvc }}"/>
+                                    </div>
+                                    <div class="six wide disabled field">
+                                        <label>Expiration</label>
+                                        <div class="two fields">
+                                            <div class="field">
+                                                <select class="ui fluid search dropdown" name="card_expire_month" value="{{ reservation.card_expire_month }}">
+                                                    <option>Month</option>
+                                                    <option value="1" {% if reservation.card_expire_month == '1' %} selected {% endif %}>January</option>
+                                                    <option value="2" {% if reservation.card_expire_month == '2' %} selected {% endif %}>February</option>
+                                                    <option value="3" {% if reservation.card_expire_month == '3' %} selected {% endif %}>March</option>
+                                                    <option value="4" {% if reservation.card_expire_month == '4' %} selected {% endif %}>April</option>
+                                                    <option value="5" {% if reservation.card_expire_month == '5' %} selected {% endif %}>May</option>
+                                                    <option value="6" {% if reservation.card_expire_month == '6' %} selected {% endif %}>June</option>
+                                                    <option value="7" {% if reservation.card_expire_month == '7' %} selected {% endif %}>July</option>
+                                                    <option value="8" {% if reservation.card_expire_month == '8' %} selected {% endif %}>August</option>
+                                                    <option value="9" {% if reservation.card_expire_month == '9' %} selected {% endif %}>September</option>
+                                                    <option value="10" {% if reservation.card_expire_month == '10' %} selected {% endif %}>October</option>
+                                                    <option value="11" {% if reservation.card_expire_month == '11' %} selected {% endif %}>November</option>
+                                                    <option value="12" {% if reservation.card_expire_month == '12' %} selected {% endif %}>December</option>
+                                                </select>
+                                            </div>
+                                            <div class="field required">
+                                                <input type="number" name="card_expire_year" maxlength="4" placeholder="Year" value="{{ reservation.card_expire_year }}" readonly/>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                             <input type="submit" value="Pay" class="ui positive fluid button" id="payment_button"
                                 onclick="$('#modify_form{{forloop.counter}}').submit();
                                          $('.modify.modal.item{{forloop.counter}}').modal('show')"/>
