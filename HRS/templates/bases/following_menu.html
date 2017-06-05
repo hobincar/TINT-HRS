@@ -1,9 +1,9 @@
 <div class="ui large top fixed menu transition hidden">
     <div class="ui container">
         <a class="active item" href="/">Home</a>
-        <a class="item" href="{% url 'reserve' %}">Reservations</a>
         <a class="item" href="/#information">Information</a>
         <a class="item" href="/#facilities">Facilities</a>
+        <a class="item" href="{% url 'reserve' %}" style="color: #4286f4;">Reservations</a>
         <div class="right menu">
             {% if user.is_authenticated %}
             <a class="item" href="{% url 'mypage' %}">My page</a>
