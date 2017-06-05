@@ -52,7 +52,7 @@ $(document)
             for (room of $('.room-item')) {
                 let n_room = $(room).find('input[name=n_room]').val();
                 let cost_per_night = parseFloat($(room).find('.cost-per-night').text());
-                room_cost += n_room * cost_per_night;
+                room_cost += n_stay * n_room * cost_per_night;
             }
             let discount = parseInt($('input[name=coupon]').val());
             let total_cost = room_cost + (16.5 * n_breakfast) + (10 * n_baby_bed);
