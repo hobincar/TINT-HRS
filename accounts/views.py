@@ -73,7 +73,7 @@ def logout(request):
     return redirect(reverse('main'))
 
 
-@login_required
+@login_required(redirect_field_name='mypage')
 def mypage(request):
     reservation_modification_form = ReservationModificationForm()
     registration_form = UserRegistrationForm()
@@ -87,7 +87,7 @@ def mypage(request):
     return render(request, 'accounts/mypage.html', args)
 
 
-@login_required
+@login_required(redirect_field_name='mypage')
 def modify_info(request):
     form = UserModificationForm(request.POST)
     if form.is_valid():

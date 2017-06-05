@@ -13,7 +13,7 @@ from .forms import ReservationForm, ReservationModificationForm, ReservationCanc
 from accounts.forms import UserRegistrationForm
 
 
-@login_required
+@login_required(redirect_field_name='reserve')
 def reserve(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
