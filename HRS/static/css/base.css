@@ -75,6 +75,12 @@
     border-width: 0;
 }
 
+.ui.inverted.button.hover {
+    background: #fff;
+    box-shadow: 0 0 0 2px #fff inset!important;
+    color: rgba(0,0,0,.8);
+}
+
 @media only screen and (max-width: 700px) {
   .ui.fixed.menu {
     display: none !important;
