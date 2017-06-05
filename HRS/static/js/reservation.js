@@ -229,7 +229,9 @@ function checkInput() {
                 // bind click event
                 $('.input.error.nag i.close.icon').on('click', function () {
                     $('.input.error.nag').remove();
-                })
+                });
+                $('#next-btn span').text('Please fill in the required fields');
+                $('#next-btn').addClass('disabled');
             }
         });
         $('input[name=check_in]').change();
